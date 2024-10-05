@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use App\Models\Permasalahan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Yaza\LaravelGoogleDriveStorage\Gdrive;
 use Maatwebsite\Excel\Facades\Excel as Excel;
 use Illuminate\Validation\ValidationException;
@@ -28,11 +29,22 @@ class ProcessController extends Controller
             ]);
 
             if (Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
+            
                 if(Auth::user()->role == 'admincs'){
+                   
                     return redirect()->route('admin-dasboard');
+                }else{
+                    if(Auth::user()->active_user === 1){
+                        return redirect()->route('dasboard');
+                    } else{
+                        Auth::logout();
+                        $request->session()->flush();
+                        return back()->with('error', 'User ini Kepegawaian tidak aktif!');
+                    }
+                    
                 }
 
-                return redirect()->route('dasboard');
+                
             } else {
                 return back()->with('error', 'Username atau Password Salah!');
             }
@@ -49,6 +61,7 @@ class ProcessController extends Controller
         Auth::logout();
 
         // Menghapus semua data sesi
+    
         $request->session()->flush();
 
         // Mengembalikan tampilan login

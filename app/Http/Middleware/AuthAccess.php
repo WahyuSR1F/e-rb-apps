@@ -16,9 +16,13 @@ class AuthAccess
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!Auth::check()) {
-            return redirect()->route('login')->with('error', 'Anda harus login terlebih dahulu.');
-        }
-        return $next($request);
+        
+            // Cek apakah user sudah login
+            if (!Auth::check()) {
+                // Jika request berasal dari Web
+                return redirect()->route('login')->with('error', 'Anda harus login terlebih dahulu.');
+            }
+
+            return $next($request);
     }
 }

@@ -145,6 +145,17 @@
         </div>
     </div>
 
+    <div id="reassignModal" class="modal">
+        <div class="modal-content">
+            <h2 class="text-xl font-semibold mb-4">Send Revision Note</h2>
+            <textarea id="revisionNote" class="form-input w-full mb-4" placeholder="Add your revision note here..."></textarea>
+            <div class="flex justify-end">
+                <button onclick="submitRevision()" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">Send</button>
+                <button onclick="closeModal()" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded ml-2">Cancel</button>
+            </div>
+        </div>
+    </div>
+
     <script src="{{ asset('assets/js/js_admin/evaluasi.js') }}"></script>
 
 @endsection

@@ -15,6 +15,8 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->foreignUuid('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
+            $table->foreignUuid('cluster_id')->nullable();
+            $table->foriegn('cluster_id')->references('id')->on('clusters');
             $table->foreignUuid('tema_id')->nullable();
             $table->foreign('tema_id')->references('id')->on('erb_types');
             $table->string('tema')->nullable();

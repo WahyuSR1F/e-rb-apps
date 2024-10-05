@@ -31,6 +31,7 @@ window.onload = function () {
 // mengambil data
 
 document.addEventListener("DOMContentLoaded", () => {
+    auth = document.getElementById('auth_token').value; 
     const tableBody = document.getElementById("table-body");
     const searchInput = document.getElementById("default-search");
     const perPageSelect = document.getElementById("countries");
@@ -51,6 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const response = await axios.post(
                 `${baseUrl}/get-permasalahan-id`,
                 {
+                    token:auth,
                     id: id,
                 }
             );
@@ -80,6 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
             const response = await axios.get(`${baseUrl}/get-rencana-aksi`, {
                 params: {
+                    token:auth,
                     id: idPermasalahan,
                     page: page,
                     search: search,
@@ -193,11 +196,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 const responsePenyelesaian = await axios.post(
                     `${baseUrl}/get-target-penyelesaian-id`,
-                    { id }
+                    { token:auth, id }
                 );
                 const responseAnggaran = await axios.post(
                     `${baseUrl}/get-anggaran-id`,
-                    { id }
+                    { token:auth, id }
                 );
 
                 const penyelesaian = responsePenyelesaian.data;
@@ -362,7 +365,7 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
             const response = await axios.post(
                 `${baseUrl}/get-rencana-aksi-id`,
-                { id }
+                { token:auth, id }
             );
 
 

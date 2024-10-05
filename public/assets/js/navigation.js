@@ -3,9 +3,19 @@ if (typeof baseUrl === 'undefined') {
     // var baseUrl = 'http://192.168.1.5:8010/api';
     var baseUrl = "http://127.0.0.1:8010/api";
 }
+let auth;
+
+
+
+
+
 
 
 document.addEventListener('DOMContentLoaded', function () {
+
+    auth = document.getElementById('auth_token').value; 
+    
+    
     const reformasiBirokrasiButton = document.querySelector('[data-collapse-toggle="dropdown-example"]');
     const dropdownExample = document.getElementById('dropdown-example');
 
@@ -30,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 async function fetchReformasiBirokrasiData() {
-    const response = await axios.get(`${baseUrl}/get-cluster`);
+    const response = await axios.get(`${baseUrl}/get-cluster`,{params:{token:auth}});
     return response.data.data;
 }
 
@@ -51,7 +61,7 @@ function createDropdownItem(item) {
     const listItem = document.createElement('li');
     const button = document.createElement('button');
     button.type = 'button';
-    button.classList.add('flex', 'items-center', 'w-full', 'p-2', 'text-base', 'text-gray-900', 'transition', 'duration-75', 'rounded-lg', 'group', 'hover:bg-gray-100', 'dark:text-white', 'dark:hover:bg-gray-700');
+    button.classList.add('flex', 'items-center', 'w-full', 'p-2', 'text-base', 'text-white', 'transition', 'duration-75', 'rounded-lg', 'group', 'hover:bg-teal-900');
     button.setAttribute('aria-controls', `dropdown-${item.id}`);
     button.setAttribute('data-collapse-toggle', `dropdown-${item.id}`);
     button.innerHTML = `
@@ -68,7 +78,7 @@ function createDropdownItem(item) {
     button.addEventListener('click', async function () {
         if (subDropdown.classList.contains('hidden')) {
             try {
-                const subData = await fetchSubmenuData({ id: item.id });
+                const subData = await fetchSubmenuData({ token:auth, id: item.id });
                 console.log(subData);
                 populateSubDropdown(subDropdown, subData);
                 subDropdown.classList.remove('hidden');

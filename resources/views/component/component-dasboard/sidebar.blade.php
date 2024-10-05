@@ -21,8 +21,8 @@
             </div>
             <div class="flex items-center">
                 <div class="flex items-center ms-3">
-                    <div class="mx-4">
-                        <h6 class="font-bold text-xl">Selamat Datang / {{ auth()->user()->username ?? 'undifined' }}
+                    <div class="mx-2">
+                        <h6 class="font-bold text-sm">{{ auth()->user()->username ?? 'undifined' }}
                         </h6>
                     </div>
                     <div>
@@ -75,11 +75,11 @@
     class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-[#0f766e] border-r border-gray-200 sm:translate-x-0  dark:border-gray-700"
     aria-label="Sidebar">
     <div class="h-full px-3 pb-4 overflow-y-auto bg-[#0f766e]">
-        <ul class="space-y-2 font-medium">
+        <ul class="space-y-2 font-bold text-md">
             <li>
                 <a href="{{ route('dasboard') }}"
-                    class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                    <svg class="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                    class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-teal-900 group">
+                    <svg class="w-5 h-5 text-white transition duration-75  group-hover:text-white"
                         aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
                         <path
                             d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z" />
@@ -91,9 +91,9 @@
             </li>
             <li>
                 <button type="button"
-                    class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                    class="flex items-center w-full p-2 text-base text-white transition duration-75 rounded-lg group hover:bg-teal-900"
                     aria-controls="dropdown-example" data-collapse-toggle="dropdown-example">
-                    <svg class="flex-shrink-0 w-5 h-5 text-gray-200 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white "
+                    <svg class="flex-shrink-0 w-5 h-5 text-white transition duration-75 group-hover:text-white"
                         aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 384 512">
                         <path
                             d="M280 64l40 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 128C0 92.7 28.7 64 64 64l40 0 9.6 0C121 27.5 153.3 0 192 0s71 27.5 78.4 64l9.6 0zM64 112c-8.8 0-16 7.2-16 16l0 320c0 8.8 7.2 16 16 16l256 0c8.8 0 16-7.2 16-16l0-320c0-8.8-7.2-16-16-16l-16 0 0 24c0 13.3-10.7 24-24 24l-88 0-88 0c-13.3 0-24-10.7-24-24l0-24-16 0zm128-8a24 24 0 1 0 0-48 24 24 0 1 0 0 48z" />
@@ -112,7 +112,7 @@
             <li>
                 <a href="{{ route('dasboard') }}"
                     class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                    <svg class="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                    <svg class="w-5 h-5 text-white transition duration-75  group-hover:text-white"
                         aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
                         <path
                             d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z" />
@@ -180,7 +180,7 @@
         <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
             <button type="button"
                 class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                data-modal-hide="popup-modal1">
+                data-modal-hide="popup-logout">
                 <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                     viewBox="0 0 14 14">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

@@ -32,25 +32,22 @@
 
                 <div class="w-full mb-2">
                     <div class="lg:flex lg:justify-start">
-                        <p class="font-bold text-lg mt-1">Export : </p>
+                        <p class="font-bold text-md mt-1">Export : </p>
                         <div class="mx-3">
+                           <button
+                           id="readProductButton" data-modal-target="readProductModal" data-modal-toggle="readProductModal"   class="p-1 bg-green-500 hover:bg-green-700 text-md font-bold text-white rounded-lg px-2"><span><i
+                                            class="fa-solid fa-file-csv text-md text-white mx-1"></i></span>Excel</button>
                             <button
-                                class="p-1 bg-red-400 hover:bg-red-700 text-lg font-bold text-white rounded-lg px-5"><span><i
-                                        class="fa-solid fa-file-pdf text-lg text-white mx-1"></i></span>PDF</button>
-                            <a href="{{ route('export-excel') }}"><button
-                                    class="p-1 bg-green-500 hover:bg-green-700 text-lg font-bold text-white rounded-lg px-5"><span><i
-                                            class="fa-solid fa-file-csv text-lg text-white mx-1"></i></span>Excel</button></a>
-                            <button
-                                class="p-1 bg-gray-400 hover:bg-gray-700 text-lg font-bold text-white rounded-lg px-5"><span><i
-                                        class="fa-regular fa-circle-question text-lg text-white mx-1"></i></span>Panduan-Pengisisan</button>
+                                class="p-1 bg-gray-400 hover:bg-gray-700 text-md font-bold text-white rounded-lg px-2"><span><i
+                                        class="fa-regular fa-circle-question text-md text-white mx-1"></i></span>Panduan-Pengisisan</button>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="flex justify-end mb-3">
                 <button data-modal-target="create-modal" data-modal-toggle="create-modal"
-                    class="p-2 mx-1 bg-blue-400 text-white font-bold hover:bg-blue-700 rounded-lg"><span><i
-                            class="fa-solid fa-plus text-white text-lg "></i></span> Create Permasalahan</button>
+                    class="p-2 py-2 mx-1 bg-blue-400 text-white text-sm font-bold hover:bg-blue-700 rounded-lg"><span><i
+                            class="fa-solid fa-plus text-white text-md "></i></span> Create Permasalahan </button>
             </div>
             <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 rounded-lg">
                 <caption
@@ -100,7 +97,7 @@
                         <th scope="col" class="px-6 py-3 text-center border">Sasaran</th>
                         <th scope="col" class="px-6 py-3 text-center border">Indikator</th>
                         <th scope="col" class="px-6 py-3 text-center border">Target</th>
-                        <th scope="col" class="px-6 py-3 text-center border">Action</th>
+                        <th scope="col" class="px-4 py-2 text-center border">Action</th>
                     </tr>
                 </thead>
                 <tbody id="table-body">
@@ -242,6 +239,55 @@
                         Simpan
                     </button>
                 </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="readProductModal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-modal md:h-full">
+        <div class="relative p-4 w-full max-w-xl h-full md:h-auto">
+            <!-- Modal content -->
+            <div class="relative p-4 bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
+                    <!-- Modal header -->
+                    <div class="flex justify-between mb-4 rounded-t sm:mb-5">
+                        <div class="text-lg text-gray-900 md:text-xl dark:text-white">
+                            <h3 class="font-bold ">
+                                Export Excel
+                            </h3>
+                            <p class=" text-sm font-bold">
+                                Pilih Tahun Export
+                            </p>
+                        </div>
+                        <div>
+                            <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 inline-flex dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="readProductModal">
+                                <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                                <span class="sr-only">Close modal</span>
+                            </button>
+                        </div>
+                    </div>
+                    <dl>
+                        <dt class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Pilih Tahun</dt>
+                        <div class="w-full sm:w-1/3">
+                            <select id="selectTahun"
+                                class="block w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                                <option value="">--Pilih Tahun--</option>
+                                <script>
+                                    const currentYear = new Date().getFullYear();
+                                    document.write(
+                                        `<option value="${currentYear}" selected>${currentYear}</option>`
+                                        ); // Menambahkan tahun saat ini sebagai opsi terpilih
+                                    for (let year = currentYear - 1; year >= 2022; year--) {
+                                        document.write(`<option value="${year}">${year}</option>`);
+                                    }
+                                </script>
+                            </select>
+                        </div>
+                    </dl>
+                    <div class="flex justify-end items-center">             
+                        <button type="button" class="inline-flex items-center text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-900">
+                            <svg aria-hidden="true" class="w-5 h-5 mr-1.5 -ml-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
+                            Export
+                        </button>
+                    </div>
             </div>
         </div>
     </div>

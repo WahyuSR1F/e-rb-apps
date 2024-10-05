@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Cluster;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class ERBType extends Model
 {
@@ -22,4 +23,9 @@ class ERBType extends Model
         'type',
         'cluster_id'
     ];
+
+    public function cluster () 
+    {
+        return  $this->belongsTo(Cluster::class);
+    }
 }

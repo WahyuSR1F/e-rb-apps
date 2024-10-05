@@ -8,14 +8,15 @@ use App\Http\Controllers\ProcessController;
 use App\Http\Controllers\AnggaranController;
 use App\Http\Controllers\DasboardController;
 use App\Http\Controllers\PenyelesaianController;
+use App\Http\Controllers\Admin\User\UserController;
 use App\Http\Controllers\Admin\Reject\RejectCpntroller;
 use App\Http\Controllers\Admin\Otorization\OtorizartionController;
 
 
-// Route::get('/user', function (Request $request) {
-//     return $request->user();
-// })->middleware('auth:sanctum');
+
 // Route::middleware(['AuthAccess'])->group(function () {
+
+Route::middleware('AuthApi')->group(function () {
 
 Route::controller(ProcessController::class)->group(function () {
     Route::get('/get-permasalahan', 'getPermasalahan')->name('get-permasalahan');
@@ -43,11 +44,15 @@ Route::controller(AnggaranController::class)->group(function () {
 
 Route::controller(TemaController::class)->group(function () {
     Route::get('/get-tema', 'getType')->name('get-tema');
+    Route::get('/get-tema-paginate', 'getPaginate')->name('get-tema-paginate');
     Route::get('/get-tema-id', 'getId')->name('get-tema-id');
+    Route::post('/get-tema-id-first', 'geByIdFirst')->name('get-tema-id-first');
 });
 
 Route::controller(ClusterController::class)->group(function () {
     Route::get('/get-cluster', 'get')->name('get-cluster');
+    Route::get('/get-cluster-paginate','getPaginate')->name('get-cluster-paginate');
+    Route::post('/get-cluster-by-id','getById')->name('get-cluster-by-id');
 });
 
 Route::controller(DasboardController::class)->group(function () {
@@ -71,4 +76,9 @@ Route::controller(RejectCpntroller::class)->group(function () {
     Route::get('reject-get-by-user','getbyUserId');
    
 });
-// });
+
+Route::controller(UserController::class)->group(function () {
+    Route::get('/get-user-paginate','getPaginate')->name('get-user-paginate');
+    Route::get('/get-user-by-id','getUserById');
+    });
+});

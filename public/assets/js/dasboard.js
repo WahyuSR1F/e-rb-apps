@@ -10,6 +10,8 @@ let idTema;
 let idPermasalahan;
 let idRenaksi;
 
+
+
 Chart.register(ChartDataLabels);
 
 const chartConfig = {
@@ -88,7 +90,7 @@ function createGradient(ctx, colorStart, colorEnd) {
 
 async function loadClusters() {
     try {
-        const response = await axios.get(`${baseUrl}/get-cluster`);
+        const response = await axios.get(`${baseUrl}/get-cluster`,{withCredentials: true, params:{token:auth}});
         const clusters = response.data.data;
         const selectElement = document.getElementById('cluster-select');
         selectElement.innerHTML = '<option value="">Pilih Cluster</option>';
@@ -107,12 +109,13 @@ async function loadClusters() {
 async function loadTema(clusterId, year, startDate, endDate) {
     try {
         const params = {
+            token: auth,
             id: clusterId,
             years: year,
             dateAwal: startDate,
             dateAkhir: endDate
         };
-        const response = await axios.get(`${baseUrl}/get-tema`, { params });
+        const response = await axios.get(`${baseUrl}/get-tema`, {withCredentials: true, params });
         const temas = response.data.data;
         const selectElement = document.getElementById('theme-select');
         selectElement.innerHTML = '<option value="">Pilih Tema</option>';
@@ -130,12 +133,13 @@ async function loadTema(clusterId, year, startDate, endDate) {
 async function loadPermasalahan(temaId, year, startDate, endDate) {
     try {
         const params = {
+            token:auth,
             id: temaId,
             years: year,
             dateAwal: startDate,
             dateAkhir: endDate
         };
-        const response = await axios.get(`${baseUrl}/get-permasalahan-by-tema`, { params });
+        const response = await axios.get(`${baseUrl}/get-permasalahan-by-tema`, { withCredentials: true, params });
         const permasalahans = response.data.data;
         const selectElement = document.getElementById('problem-select');
         selectElement.innerHTML = '<option value="">Pilih Permasalahan</option>';
@@ -153,12 +157,13 @@ async function loadPermasalahan(temaId, year, startDate, endDate) {
 async function loadRenaksi(permasalahanId, year, startDate, endDate) {
     try {
         const params = {
+            token:auth,
             id: permasalahanId,
             years: year,
             dateAwal: startDate,
             dateAkhir: endDate
         };
-        const response = await axios.get(`${baseUrl}/get-rencana-aksi-permasalahan`, { params });
+        const response = await axios.get(`${baseUrl}/get-rencana-aksi-permasalahan`, { withCredentials: true, params });
         const renaksi = response.data.data;
         const selectElement = document.getElementById('renaksi-select');
         selectElement.innerHTML = '<option value="">Pilih Renaksi</option>';
@@ -173,7 +178,11 @@ async function loadRenaksi(permasalahanId, year, startDate, endDate) {
     }
 }
 
-document.addEventListener('DOMContentLoaded', loadClusters);
+document.addEventListener('DOMContentLoaded', function(){
+    auth = document.getElementById('auth_token').value; 
+    fetchData('2024');
+    loadClusters(auth)
+});
 
 document.getElementById('cluster-select').addEventListener('change', function () {
     idCluster = this.value;
@@ -421,67 +430,74 @@ document.getElementById('renaksi-select').addEventListener('change', async funct
 
 async function rataRata(id, year, startDate, endDate) {
     const params = {
+        token:auth,
         id: id,
         years: year,
         dateAwal: startDate,
         dateAkhir: endDate
     };
-    const response = await axios.get(`${baseUrl}/get-capaian-permasalahan`, { params });
+    const response = await axios.get(`${baseUrl}/get-capaian-permasalahan`, { withCredentials: true, params });
     return response.data.data;
 }
 
 async function rataRataAnggaran(id, year, startDate, endDate) {
     const params = {
+        token:auth,
         id: id,
         years: year,
         dateAwal: startDate,
         dateAkhir: endDate
     };
-    const response = await axios.get(`${baseUrl}/get-capaian-anggaran`, { params });
+    const response = await axios.get(`${baseUrl}/get-capaian-anggaran`, {withCredentials: true, params });
     return response.data.data;
 }
 
 async function capaianRenaksiPenyelesaian(id, year, startDate, endDate) {
     const params = {
+        token:auth,
         id: id,
         years: year,
         dateAwal: startDate,
         dateAkhir: endDate
     };
-    const response = await axios.get(`${baseUrl}/get-capaian-renaksi-penyelesaian`, { params });
+    const response = await axios.get(`${baseUrl}/get-capaian-renaksi-penyelesaian`, {withCredentials: true, params });
     return response.data.data;
 }
 
 async function capaianRenaksiAnggaran(id, year, startDate, endDate) {
     const params = {
+        token:auth,
         id: id,
         years: year,
         dateAwal: startDate,
         dateAkhir: endDate
     };
-    const response = await axios.get(`${baseUrl}/get-capaian-renaksi-anggaran`, { params });
+    const response = await axios.get(`${baseUrl}/get-capaian-renaksi-anggaran`, { withCredentials: true, params });
     return response.data.data;
 }
 
 async function TWPenyelesaian(id, year, startDate, endDate) {
     const params = {
+        token:auth,
         id: id,
         years: year,
         dateAwal: startDate,
         dateAkhir: endDate
     };
-    const response = await axios.get(`${baseUrl}/get-capaian-tw-penyelesaian`, { params });
+    const response = await axios.get(`${baseUrl}/get-capaian-tw-penyelesaian`, {withCredentials: true, params });
     return response.data.data;
 }
 
-async function fetchData(year, startDate, endDate) {
+async function fetchData( year, startDate, endDate) {
     try {
         const params = {
+            token: auth,
             years: year,
             dateAwal: startDate,
             dateAkhir: endDate
         };
-        const response = await axios.get(`${baseUrl}/get-count`, { params });
+        const response = await axios.get(`${baseUrl}/get-count`, { withCredentials: true,
+             params });
         const counts = response.data.data;
 
         document.getElementById('pemasalahan-count').innerText = counts.permasalahan || 0;
@@ -493,7 +509,8 @@ async function fetchData(year, startDate, endDate) {
     }
 }
 
-fetchData('2024');
+
+
 
 async function updateAllCharts() {
     const selectedYear = document.getElementById('selectTahun').value;
@@ -552,6 +569,7 @@ async function updateAllCharts() {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
+    
     const periodeAwal = document.getElementById('periodeAwal');
     const periodeAkhir = document.getElementById('periodeAkhir');
     const selectTahun = document.getElementById('selectTahun');

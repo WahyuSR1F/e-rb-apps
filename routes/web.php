@@ -1,10 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ClusterController;
 use App\Http\Controllers\ProcessController;
 use App\Http\Controllers\AnggaranController;
 use App\Http\Controllers\NavigationController;
 use App\Http\Controllers\PenyelesaianController;
+use App\Http\Controllers\TemaController;
+use App\Http\Controllers\Admin\User\UserController;
 use App\Http\Controllers\Admin\Reject\RejectCpntroller;
 use App\Http\Controllers\Admin\Otorization\OtorizartionController;
 
@@ -71,14 +74,33 @@ Route::middleware(['AuthAccess'])->group(function () {
     });
 
     Route::controller(OtorizartionController::class)->group(function () {
-        Route::post('otorization-create','setOtorization');
-        Route::post('otoruzation-update','update');
-        Route::post('otoruzation-delete','delete');
+        Route::post('otorization-create','setOtorization')->name('otorization-create');
+        Route::post('otorization-update','update')->name('otorization-update');
+        Route::post('otorization-delete','delete')->name('otorization-delete');
     });
 
     Route::controller(RejectCpntroller::class)->group(function () {
-        Route::post('reject-create','setOtorization');
-        Route::post('reject-update','update');
-        Route::post('reject-delete','delete');
+        Route::post('reject-create','setOtorization')->name('reject-create');
+        Route::post('reject-update','update')->name('reject-update');
+        Route::post('reject-delete','delete')->name('reject-delete');
+    });
+
+    Route::controller(UserController::class)->group(function () {
+        Route::post('user-create','create')->name('user-create');
+        Route::post('user-update','update')->name('user-update');
+        Route::post('user-delete','delete')->name('user-delete');
+        Route::post('user-reset','reset')->name('user-reset');
+    });
+
+    Route::controller(TemaController::class)->group(function () {
+        Route::post('tema-create','create')->name('tema-create');
+        Route::post('tema-update','update')->name('tema-update');
+        Route::post('tema-delete','delete')->name('tema-delete');
+    });
+
+    Route::controller(ClusterController::class)->group(function () {
+        Route::post('cluster-create','create')->name('cluster-create');
+        Route::post('cluster-update','update')->name('cluster-update');
+        Route::post('cluster-delete','delete')->name('cluster-delete');
     });
 });

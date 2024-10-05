@@ -3,6 +3,7 @@
 @section('judul', 'E-RB')
 
 @section('viewer')
+
     <div class="mt-[5rem]">
         <div class=" w-full px-5">
             <h4 class="text-[3rem] font-bold text-gray-800">Monitoring E-RB</h4>

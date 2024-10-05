@@ -35,6 +35,7 @@ window.onload = function () {
 // mengambil data
 
 document.addEventListener("DOMContentLoaded", () => {
+    auth = document.getElementById('auth_token').value; 
     // Replace with your actual base URL
     const tableBody = document.getElementById("table-body");
     const searchInput = document.getElementById("default-search");
@@ -47,7 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const Tema = async (id, element) => {
 
         const response = await axios.get(`${baseUrl}/get-tema-id`, {
-            params: { id: id }
+            params: {token:auth, id: id }
         });
         element.textContent = response.data.data[0].nama;
     }
@@ -63,6 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
             const response = await axios.get(`${baseUrl}/get-permasalahan`, {
                 params: {
+                    token:auth,
                     erb_type_id: idTema,
                     page: page,
                     search: search,
@@ -108,10 +110,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 <td class="px-6 py-4">
                     ${item.target}
                 </td>
-                <td class="px-6 py-4">
+                <td class="px-4 py-2">
                   
                     <button data-id="${item.id
-                }"  class=" rencana-aksi-button px-2 text-xs my-1 w-full py-3 bg-blue-400 text-white font-bold text-center hover:bg-blue-700 rounded">
+                }"  class=" rencana-aksi-button px-2 text-xs my-1 w-[70%] py-2 bg-blue-400 text-white font-bold text-center hover:bg-blue-700 rounded">
                             <div class="flex justify-center">
                                 <p class="text-gray-200"><i class="fa-regular fa-lightbulb text-lg text-white"></i></p>
                                 <p class="mx-1 mt-2">Rencana Aksi</p>
@@ -119,14 +121,14 @@ document.addEventListener("DOMContentLoaded", () => {
                     </button>
                  
                     <button data-id="${item.id
-                }" data-modal-target="CrudModal" data-modal-toggle="CrudModal" class="px-2 text-xs my-1 w-full py-3 bg-yellow-400 text-white font-bold text-center hover:bg-yellow-700 rounded">
+                }" data-modal-target="CrudModal" data-modal-toggle="CrudModal" class="px-2 text-xs my-1 w-[70%] py-2 bg-yellow-400 text-white font-bold text-center hover:bg-yellow-700 rounded">
                         <div class="flex justify-center">
                             <p class="text-gray-200"><i class="fa-regular fa-pen-to-square text-lg text-white"></i></p>
                             <p class="mx-1 mt-2">Edit</p>
                         </div>
                     </button>
                     <button data-id="${item.id
-                }" data-modal-target="popup-modal2" data-modal-toggle="popup-modal2" class="px-2 text-xs my-1 block w-full py-3 bg-red-400 text-white font-bold text-center hover:bg-red-700 rounded">
+                }" data-modal-target="popup-modal2" data-modal-toggle="popup-modal2" class="px-2 text-xs my-1 block w-[70%] py-2 bg-red-400 text-white font-bold text-center hover:bg-red-700 rounded">
                         <div class="flex justify-center">
                             <p class="text-gray-200"><i class="fa-regular fa-trash-can text-white text-lg"></i></p>
                             <p class="mx-1 mt-2">Delete</p>
@@ -211,7 +213,7 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
             const response = await axios.post(
                 `${baseUrl}/get-permasalahan-id`,
-                { id }
+                { token:auth, id }
             );
             const data = response.data.data;
 

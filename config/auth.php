@@ -40,6 +40,10 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'api' => [
+            'driver' => 'session', // Menggunakan session untuk API juga
+            'provider' => 'users',
+        ],
     ],
 
     /*
