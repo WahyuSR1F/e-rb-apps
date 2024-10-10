@@ -13,10 +13,6 @@ class RBExport implements FromCollection, WithHeadings, WithEvents
     public function collection()
     {
         $data = Permasalahan::with('allRelatedData')->get();
-
-
-
-
         // Siapkan array untuk data yang akan diekspor
         $exportData = [];
 

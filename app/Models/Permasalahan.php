@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\User;
 use App\Models\RencanaAksi;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -48,9 +49,13 @@ class Permasalahan extends Model
     {
         return $this->hasMany(RencanaAksi::class, 'permasalahan_id', 'id');
     }
-
+    public function pembuat()
+    {
+        return  $this->belongsTo(User::class,'user_id', 'id');
+    }
+   
     public function allRelatedData()
     {
-        return $this->renaksi()->with(['targetAnggaran', 'targetPenyelesaian', 'realisasiAnggaran', 'realisasiPenyelesaian']);
+        return $this->renaksi()->with(['targetAnggaran', 'targetPenyelesaian', 'realisasiAnggaran', 'realisasiPenyelesaian','reject','FileAssets']);
     }
 }

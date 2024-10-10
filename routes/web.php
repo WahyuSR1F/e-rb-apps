@@ -33,6 +33,7 @@ Route::middleware(['AuthAccess'])->group(function () {
         Route::get('/target-anggaran', 'TargetAnggaranSutingView')->name('target-anggaran');
         Route::get('/realisasi-penyelesaian', 'RealisasiPenyelesaianSuntingView')->name('realisasi-penyelesaian');
         Route::get('/realisasi-anggaran', 'RelisasiAnggaranSuntingView')->name('realisasi-anggaran');
+        Route::get('/evaluasi','EvaluatedUserView')->name('evaluasi');
 
         //admin navigation
         Route::get('/admin-dasboard','DasboardAdminView')->name('admin-dasboard');
@@ -83,6 +84,7 @@ Route::middleware(['AuthAccess'])->group(function () {
         Route::post('reject-create','setOtorization')->name('reject-create');
         Route::post('reject-update','update')->name('reject-update');
         Route::post('reject-delete','delete')->name('reject-delete');
+        Route::get('export-approve','exportExcelApprove')->name('export-approve');
     });
 
     Route::controller(UserController::class)->group(function () {

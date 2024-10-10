@@ -7,6 +7,7 @@ use App\Http\Controllers\ClusterController;
 use App\Http\Controllers\ProcessController;
 use App\Http\Controllers\AnggaranController;
 use App\Http\Controllers\DasboardController;
+use App\Http\Controllers\EvaluasiController;
 use App\Http\Controllers\PenyelesaianController;
 use App\Http\Controllers\Admin\User\UserController;
 use App\Http\Controllers\Admin\Reject\RejectCpntroller;
@@ -72,8 +73,10 @@ Route::controller(OtorizartionController::class)->group(function () {
 });
 
 Route::controller(RejectCpntroller::class)->group(function () {
-    Route::get('reject-get-all','getAll');
-    Route::get('reject-get-by-user','getbyUserId');
+    Route::get('get-eval-rb','getAllDataRB');
+    Route::post('update-by-admin', 'updateEvaluasi');
+    Route::post('approve-by-admin', 'approve');
+    Route::post('reject-by-admin','rejected');
    
 });
 
@@ -81,4 +84,9 @@ Route::controller(UserController::class)->group(function () {
     Route::get('/get-user-paginate','getPaginate')->name('get-user-paginate');
     Route::get('/get-user-by-id','getUserById');
     });
+});
+
+Route::controller(EvaluasiController::class)->group(function () {
+    Route::get('/get-evaluasi/{user_id}', 'getEvaluasi')->name('get-evaluasi');
+    Route::post('/update-evaluasi/{user_id}', 'updateEvaluasi')->name('update-evaluasi');
 });

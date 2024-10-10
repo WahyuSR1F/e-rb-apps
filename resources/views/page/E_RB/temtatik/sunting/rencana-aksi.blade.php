@@ -92,8 +92,8 @@
 
                 <div class="flex justify-end mb-2 px-4">
                     <button data-modal-target="create-modal" data-modal-toggle="create-modal"
-                        class="p-2 mx-1 bg-blue-400 text-white font-bold hover:bg-blue-700 rounded-lg"><span><i
-                                class="fa-solid fa-plus text-lg text-white mx-1 mt-1"></i></span>Create Renaksi</button>
+                        class="p-2 mx-1 bg-blue-400 text-white font-semibold hover:bg-blue-700 rounded-lg"><span><i
+                                class="fa-solid fa-plus text-sm text-white mx-1 mt-1"></i></span>Create Renaksi</button>
                 </div>
 
             </div>
@@ -306,10 +306,10 @@
     <!-- create modal 2 -->
 
     <div id="create-modal" tabindex="-1" aria-hidden="true"
-        class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-modal md:h-full">
-        <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
+        class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-modal md:h-full mt-[5rem]">
+        <div class="relative p-4 w-[80%] max-w-2xl h-full">
             <!-- Modal content -->
-            <div class="relative p-4 bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
+            <div class="relative p-4 bg-white rounded-lg shadow dark:bg-gray-800 pb-20">
                 <!-- Modal header -->
                 <div class="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
                     <h3 class="text-lg font-semibold text-gray-900 dark:text-white">

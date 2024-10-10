@@ -26,27 +26,55 @@
                         class="px-6 py-2 bg-blue-400 hover:bg-blue-700 rounded-lg text-md text-white font-semibold"><span><i
                                 class="fa-solid fa-chevron-left mx-1 text-lg text-white"></i></span>Back</button>
                 </a>
-                <h1 class="text-xl font-bold">Target Penyelesaian</h1>
+                <h1 class="text-xl font-bold">Target Kinerja</h1>
                 <div class="w-full flex justify-between bg-white dark:bg-dark mt-4">
-                    <div class="mt-1 p-3 rounded-lg bg-white dark:bg-gray-800 text-black dark:text-white shadow-md">
+                    <div class="mt-1 p-3 rounded-lg bg-white text-gray-800 w-[50%]  dark:bg-gray-800 dark:text-white shadow-md">
+                        <p class="text-md">Detail Rencana Aksi</p>
+                        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                <thead class="text-xs text-gray-700 uppercase dark:text-gray-400">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+                                            Aspek
+                                        </th>
+                                        <th scope="col" class="px-6 py-3">
 
-                        <p class="text-lg font-bold">Detail Rencana Aksi</p>
-                        <table>
-                            <tr>
-                                <td class="text-black dark:text-white">Rencana Aksi</td>
-                                <td class="text-black dark:text-white">:</td>
-                                <td>
-                                    <p id="title-problem" class="text-black dark:text-white m-0 p-0 mx-3"></p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-black dark:text-white">Indikator</td>
-                                <td class="text-black dark:text-white">:</td>
-                                <td>
-                                    <p id="title-sasaran" class="text-black dark:text-white m-0 p-0 mx-3"></p>
-                                </td>
-                            </tr>
-                        </table>
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+                                            Deskription
+                                        </th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="border-b border-gray-200 dark:border-gray-700">
+                                        <th scope="row"
+                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                            Permasalahan
+                                        </th>
+                                        <td class="px-6 py-4">
+                                            :
+                                        </td>
+                                        <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800">
+                                            <p id="title-problem" class="text-md text-black dark:text-white m-0 p-0 mx-3">
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr class="border-b border-gray-200 dark:border-gray-700">
+                                        <th scope="row"
+                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                            Sasaran
+                                        </th>
+                                        <td class="px-6 py-4">
+                                            :
+                                        </td>
+                                        <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800">
+                                            <p id="title-sasaran" class="text-md text-black dark:text-white m-0 p-0 mx-3"></p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
                 <div class="flex justify-end mb-1 mt-6 px-4">
@@ -57,13 +85,13 @@
                     <button id="createButton" data-modal-target="create-modal" data-modal-toggle="create-modal"
                         class="p-2 mx-1 bg-blue-400 text-white font-bold hover:bg-blue-700 rounded-lg"><span><i
                                 class="fa-solid fa-plus text-white text-xl mx-1"></i></span>Create Target
-                        Penyelesaian</button>
+                        Kinerja</button>
                 </div>
             </div>
             <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 rounded-lg">
                 <caption
                     class="p-5 text-lg font-semibold  rounded-t-lg text-left rtl:text-right text-gray-900 bg-white dark:text-white dark:bg-gray-800 rounded-top">
-                    Target Penyelesaian
+                    Target Kinerja
                     <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400"></p>
                     <div class="flex justify-end">
                         <div class="mx-3 mt-1 flex justify-start">
@@ -102,7 +130,7 @@
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
                         <th scope="col" rowspan="2" class="px-6 py-3 text-center border">No</th>
-                        <th scope="col" colspan="5" class="px-6 py-4 text-center border">Target Penyelesaian</th>
+                        <th scope="col" colspan="5" class="px-6 py-4 text-center border">Target Kinerja</th>
                         <th scope="col" rowspan="2" class="px-6 py-3 text-center border">Jenis Kegiatan Aksi (Terkait
                             atau tidak terkait langsung dengan Masyarakat Stakeholder Utama)</th>
                         <th scope="col" rowspan="2" class="px-6 py-3 text-center border">Detail</th>
@@ -180,7 +208,7 @@
                 <!-- Modal header -->
                 <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
                     <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-                        Target Penyelesaian
+                        Target Kinerja
                     </h3>
                     <button type="button"
                         class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
@@ -198,7 +226,7 @@
                     @csrf
                     <div class="grid gap-4 mb-4 grid-cols-2">
 
-                        <h6 class="font-bold text-white text-xs">Edit Target Penyelesaian</h6>
+                        <h6 class="font-bold text-white text-xs">Edit Target Kinerja</h6>
                         <input type="hidden" id="idTargetPenyelesaian" name="id">
                         <div class="col-span-2">
                             <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tri
@@ -266,7 +294,7 @@
                 <!-- Modal header -->
                 <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
                     <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-                        Create Target Penyelesaian
+                        Create Target Kinerja
                     </h3>
                     <button type="button"
                         class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
@@ -288,7 +316,7 @@
                         <div class="col-span-2">
                             <label for="typerb"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Type
-                                Penyelesaian</label>
+                                Kinerja Perhitungan</label>
                             <select id="typerb" name="type"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                 <option selected>Choose </option>

@@ -215,6 +215,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
             tableBody.appendChild(row);
         });
+        tableBody.addEventListener('click', (event) => {
+            const target = event.target.closest('[data-modal-toggle]');
+            if (target) {
+              const modalId = target.getAttribute('data-modal-target');
+              const modal = document.getElementById(modalId);
+              if (modal) {
+                const modalInstance = new Modal(modal);
+                modalInstance.toggle();
+              }
+            }
+          });
     };
 
     const updatePagination = (data) => {

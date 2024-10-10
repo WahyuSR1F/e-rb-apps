@@ -29,39 +29,67 @@
                 </a>
                 <h1 class="text-xl font-bold">Target Anggaran</h1>
                 <div class="w-full flex justify-between mt-4">
-                    <div class="mt-1 p-3 rounded-lg bg-white dark:bg-gray-800 text-white shadow-md">
+                    <div class="mt-1 p-3 rounded-lg bg-white text-gray-800 w-[50%]  dark:bg-gray-800 dark:text-white shadow-md">
+                        
+                        <p class="text-md">Detail Rencana Aksi</p>
+                        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                <thead class="text-xs text-gray-700 uppercase dark:text-gray-400">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+                                            Aspek
+                                        </th>
+                                        <th scope="col" class="px-6 py-3">
 
-                        <p class="text-lg font-bold">Detail Rencana Aksi</p>
-                        <table>
-                            <tr>
-                                <td class="font-bold text-md text-black dark:text-white">Aspek</td>
-                                <td>:</td>
-                                <td>
-                                    <p id="title-problem" class="font-bold text-md text-black dark:text-white m-0 p-0 mx-3">
-                                    </p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="font-bold text-md text-black dark:text-white">Sasaran</td>
-                                <td>:</td>
-                                <td>
-                                    <p id="title-sasaran" class="font-bold text-md text-black dark:text-white m-0 p-0 mx-3">
-                                        Otomatisasi dan Sistem Manajemen Rumah Sakit</p>
-                                </td>
-                            </tr>
-                        </table>
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+                                            Deskription
+                                        </th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="border-b border-gray-200 dark:border-gray-700">
+                                        <th scope="row"
+                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                            Permasalahan
+                                        </th>
+                                        <td class="px-6 py-4">
+                                            :
+                                        </td>
+                                        <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800">
+                                            <p id="title-problem" class="text-md text-black dark:text-white m-0 p-0 mx-3">
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr class="border-b border-gray-200 dark:border-gray-700">
+                                        <th scope="row"
+                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                            Sasaran
+                                        </th>
+                                        <td class="px-6 py-4">
+                                            :
+                                        </td>
+                                        <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800">
+                                            <p id="title-sasaran" class="text-md text-black dark:text-white m-0 p-0 mx-3"></p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
+                    
                 </div>
 
             </div>
             <div class="flex justify-end mt-6 mb-2">
                 <a href="{{ route('target-penyelesaian') }}">
-                    <button class="p-2 mx-1 bg-green-400 text-white font-bold hover:bg-green-700 rounded-lg">Target
+                    <button class="p-1 py-2 mx-1 text-sm bg-green-400 text-white font-semibold hover:bg-green-700 rounded-lg">Target
                         Penyelesaian</button>
                 </a>
                 <button id="createButton" data-modal-target="create-modal" data-modal-toggle="create-modal"
-                    class="p-2 bg-blue-400 text-white font-bold hover:bg-blue-700 rounded-lg"><span><i
-                            class="fa-solid fa-plus text-white text-xl mx-1"></i></span>Create Target Anggaran</button>
+                    class="p-1 bg-blue-400 text-white font-semibold text-sm hover:bg-blue-700 rounded-lg"><span><i
+                            class="fa-solid fa-plus text-white text-sm  mx-1"></i></span>Create Target Anggaran</button>
             </div>
             <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 rounded-lg">
                 <caption

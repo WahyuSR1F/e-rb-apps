@@ -27,27 +27,54 @@
                 </a>
                 <h1 class="text-xl font-bold">Realisasi Penyelesaian</h1>
                 <div class="w-full flex justify-between mt-4">
-                    <div class="mt-1 p-3 rounded-lg bg-white dark:bg-gray-800 text-white shadow-md">
+                    <div class="mt-1 p-3 rounded-lg bg-white text-gray-800 w-[50%]  dark:bg-gray-800 dark:text-white shadow-md">
+                        
+                        <p class="text-md">Detail Rencana Aksi</p>
+                        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                <thead class="text-xs text-gray-700 uppercase dark:text-gray-400">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+                                            Aspek
+                                        </th>
+                                        <th scope="col" class="px-6 py-3">
 
-                        <p class="text-lg font-bold">Detail Realisasi Penyelesaian</p>
-                        <table>
-                            <tr>
-                                <td>Aspek</td>
-                                <td>:</td>
-                                <td>
-                                    <p id="title-problem"
-                                        class=" text-black dark:text-white text-lg font-bold m-0 p-0 mx-3"></p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Sasaran</td>
-                                <td>:</td>
-                                <td>
-                                    <p id="title-sasaran" class="text-black dark:text-white  text-lg m-0 p-0 mx-3">
-                                        Meningkatkan kualitas perawatan pasien</p>
-                                </td>
-                            </tr>
-                        </table>
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+                                            Deskription
+                                        </th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="border-b border-gray-200 dark:border-gray-700">
+                                        <th scope="row"
+                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                            Permasalahan
+                                        </th>
+                                        <td class="px-6 py-4">
+                                            :
+                                        </td>
+                                        <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800">
+                                            <p id="title-problem" class="text-md text-black dark:text-white m-0 p-0 mx-3">
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr class="border-b border-gray-200 dark:border-gray-700">
+                                        <th scope="row"
+                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                            Sasaran
+                                        </th>
+                                        <td class="px-6 py-4">
+                                            :
+                                        </td>
+                                        <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800">
+                                            <p id="title-sasaran" class="text-md text-black dark:text-white m-0 p-0 mx-3"></p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
 

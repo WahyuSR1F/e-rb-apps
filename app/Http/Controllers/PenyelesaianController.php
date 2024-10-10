@@ -401,12 +401,12 @@ class PenyelesaianController extends Controller
 
             //delete to file asset and delete GD
             $file = FileAsset::where('rencana_aksi_id', $data->rencana_aksi_id)->first();
-
-            $file_path =  $file->file_path . '/' . $file->file_name;
-            $this->GDDeleteFile($file_path);
-
-            // on proccess delete
-            $file->delete();
+            if($file){
+                dd($file);
+                $file_path =  $file->file_path . '/' . $file->file_name;
+                $this->GDDeleteFile($file_path);
+                $file->delete();
+            }
 
             $data->delete();
 
@@ -449,6 +449,7 @@ class PenyelesaianController extends Controller
 
     public function deleteRealisasiPenyelesaianById($id)
     {
+    
         try {
 
 
@@ -456,13 +457,7 @@ class PenyelesaianController extends Controller
 
             //delete to file asset and delete GD
             $file = FileAsset::where('rencana_aksi_id', $data->rencana_aksi_id)->first();
-
-            $file_path =  $file->file_path . '/' . $file->file_name;
-            $this->GDDeleteFile($file_path);
-
             // on proccess delete
-            $file->delete();
-
             $data->delete();
 
             return back()->with('success', 'data berhasil dihapus');

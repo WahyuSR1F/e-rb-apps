@@ -218,6 +218,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
             tableBody.appendChild(row);
         });
+        tableBody.addEventListener('click', (event) => {
+            const target = event.target.closest('[data-modal-toggle]');
+            if (target) {
+              const modalId = target.getAttribute('data-modal-target');
+              const modal = document.getElementById(modalId);
+              if (modal) {
+                const modalInstance = new Modal(modal);
+                modalInstance.toggle();
+              }
+            }
+          });
     };
 
     const updatePagination = (data) => {
@@ -316,40 +327,79 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    document.body.addEventListener("click", async (event) => {
+    async function showFile(event) {
         if (event.target.closest("[data-modal-target='ShowFile']")) {
-            document.getElementById("ShowFile").classList.remove("hidden");
-            const id = decodeURIComponent(event.target
-                .closest("[data-id]")
-                .getAttribute("data-id"));
-
-            const encodedId = id.replace(/\s/g, '%20').replace(/\+/g, '%2B');
-            try {
-
-                console.log(id)
-                const response = await axios.get(baseUrl + `/tes-getgd?id=${encodedId}`, {
-                    token:auth,
-                    responseType: 'blob'
-                });
-
-
-
-                if (response.headers['content-type'] !== 'application/pdf') {
-                    throw new Error('Received non-PDF response');
-                }
-
-                const blob = new Blob([response.data], { type: 'application/pdf' });
-                const url = URL.createObjectURL(blob);
-
-                const iframe = document.getElementById('pdfViewer');
-                console.log(iframe);
-                iframe.src = url;
-
-            } catch (error) {
-                console.error('Axios error:', error);
+          document.getElementById("ShowFile").classList.remove("hidden");
+          const id = decodeURIComponent(event.target
+            .closest("[data-id]")
+            .getAttribute("data-id"));
+      
+          const encodedId = id.replace(/\s/g, '%20').replace(/\+/g, '%2B');
+          try {
+            console.log(id)
+            const response = await axios.get(baseUrl + `/tes-getgd?id=${encodedId}`, {
+              params: { token: auth },
+              responseType: 'blob'
+            });
+      
+            if (response.headers['content-type'] !== 'application/pdf') {
+              throw new Error('Received non-PDF response');
             }
+      
+            const blob = new Blob([response.data], { type: 'application/pdf' });
+            const url = URL.createObjectURL(blob);
+      
+            const iframe = document.getElementById('pdfViewer');
+            console.log(url);
+            iframe.src = url;
+      
+          } catch (error) {
+            console.error('Axios error:', error);
+          }
         }
-    });
+      }
+
+
+      document.body.addEventListener("click", async (event) => {
+        showFile(event);
+      });
+    
+
+    // document.body.addEventListener("click", async (event, auth) => {
+        
+    //     if (event.target.closest("[data-modal-target='ShowFile']")) {
+    //         document.getElementById("ShowFile").classList.remove("hidden");
+    //         const id = decodeURIComponent(event.target
+    //             .closest("[data-id]")
+    //             .getAttribute("data-id"));
+
+    //         const encodedId = id.replace(/\s/g, '%20').replace(/\+/g, '%2B');
+    //         try {
+
+    //             console.log(id)
+    //             const response = await axios.get(baseUrl + `/tes-getgd?id=${encodedId}`, {
+    //                 token:auth,
+    //                 responseType: 'blob'
+    //             });
+
+
+
+    //             if (response.headers['content-type'] !== 'application/pdf') {
+    //                 throw new Error('Received non-PDF response');
+    //             }
+
+    //             const blob = new Blob([response.data], { type: 'application/pdf' });
+    //             const url = URL.createObjectURL(blob);
+
+    //             const iframe = document.getElementById('pdfViewer');
+    //             console.log(iframe);
+    //             iframe.src = url;
+
+    //         } catch (error) {
+    //             console.error('Axios error:', error);
+    //         }
+    //     }
+    // });
 
 
 

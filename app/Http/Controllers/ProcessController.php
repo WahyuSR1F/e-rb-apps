@@ -427,7 +427,7 @@ class ProcessController extends Controller
     }
     public function exportExcel()
     {
-        return Excel::download(new RBExport, Str::uuid() . 'user.xlsx');
+        return Excel::download(new RBExport, Str::uuid() . '_user.xlsx');
     }
 
     protected function GDPutFile($folder, $fileName, $request): void
