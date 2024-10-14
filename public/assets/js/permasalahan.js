@@ -45,6 +45,21 @@ function initializeModals() {
     });
 }
 
+function handleExport() {
+    // Get the modal
+    const modal = document.getElementById("readProductModal");
+    
+    // Show the modal (assuming you're using a library like Flowbite)
+    const modalInstance = new Modal(modal);
+    modalInstance.show();
+    console.log(idTema);
+
+    // Fill the hidden input with the current tema ID
+    const idTemaInput = document.getElementById('id_Tema');
+    idTemaInput.value = idTema; // idTema should be already defined in your existing code
+}
+
+
 document.addEventListener("DOMContentLoaded", () => {
     auth = document.getElementById('auth_token').value; 
     // Replace with your actual base URL
@@ -158,20 +173,22 @@ document.addEventListener("DOMContentLoaded", () => {
                 window.location.href = "/rencana-aksi";
             });
         });
-        tableBody.addEventListener('click', (event) => {
+        document.addEventListener('click', (event) => {
             const target = event.target.closest('[data-modal-toggle]');
             if (target) {
-              const modalId = target.getAttribute('data-modal-target');
-              const modal = document.getElementById(modalId);
-              if (modal) {
+                const modalId = target.getAttribute('data-modal-toggle');
+                const modal = document.getElementById(modalId);
+            if (modal) {
                 const modalInstance = new Modal(modal);
                 modalInstance.toggle();
-              }
             }
-          });
+            }
+        });
     };
     initializeModals();
     
+    const exportButton = document.getElementById("readProductButton");
+    exportButton.addEventListener("click", handleExport);
 
     const updatePagination = (data) => {
         const pagination = document.getElementById("pagination");
@@ -282,6 +299,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
+   
     fetchData();
 
     searchInput.addEventListener("input", () => {

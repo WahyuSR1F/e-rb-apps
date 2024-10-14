@@ -6,17 +6,15 @@
         <div class="container mx-auto mt-2 px-6">
             <div class="bg-white shadow-md rounded-lg p-6">
                 <div class="mb-6">
-                    <h3 class="text-xl font-bold text-black">Monitoring Reformasi Birokrasi</h3>
+                    <h3 class="text-2xl font-semibold text-black">Monitoring Reformasi Birokrasi</h3>
                     
                     <div class="flex justify-start items-center mb-4">
                         <!-- Button to download Excel -->
                         <div class=" mx-2">
                             <label for="countries"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Export</label>
-                                    <button id="export-button"
-                                    class="bg-green-500 hover:bg-green-700 text-white py-2 px-4 rounded">
-                                    Download Data
-                                     </button>
+                            <button id="export-button"
+                                class="bg-green-500 hover:bg-green-700 text-white py-2 px-4 rounded">Download Data</button>
                         </div>
 
                         <div class=" mx-2">
@@ -25,49 +23,46 @@
                             <select id="cluster-select" name="cluster"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                 <option selected>Pilih Cluster</option>
-
                             </select>
                         </div>
+
                         <div id="theme-dropdown" class="mx-2 hidden">
                             <label for="theme-select"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tema</label>
                             <select id="theme-select" name="tema"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                 <option selected>Pilih Tema</option>
-
                             </select>
                         </div>
 
+                        <div class="mx-2 hidden" id="refresContainer">
+                            <label for="theme-select"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Refresh</label>
+                            <button id="refreshButton"
+                                class="px-4 py-2 rounded text-white bg-blue-500 hover:bg-blue-700">Refresh</button>
+                        </div>
                     </div>
 
                     <h2 class="text-2xl font-semibold mb-4">DAFTAR RENCANA AKSI REFORMASI DIGITALISA
-                        PADA DINAS KESEHATAN TAHUN {{ date('Y') }}                    </h2>
-
-                    <div class="p-2 hidden" id="refresContainer">
-                        <button id="refreshButton"
-                            class="px-2 py-1 font-bold text-sm text-white bg-blue-400 rounded-lg hover:bg-blue-500"><span><i
-                                class="fa-solid fa-repeat text-white text-md  mx-2"></i></span>Refresh</button>
-                    </div>
+                        PADA DINAS KESEHATAN TAHUN {{ date('Y') }}</h2>
 
                     <!-- Table -->
                     <div class="overflow-x-auto">
-                        <table id="approvedDataTable"
-                            class="min-w-full bg-white border border-gray-500 rounded-lg overflow-hidden">
+                        <table id="approvedDataTable" 
+                            {{-- class="min-w-full rounded-lg overflow-hidden bg-white border border-gray-500">--}}
+                                class="table-auto w-full max-w-full bg-white border border-gray-500 rounded-lg"> 
                             <thead>
                                 <tr>
                                     <th scope="col" rowspan="3"
                                         class="py-2 px-6 bg-gray-100 text-center text-gray-600 border font-semibold">No</th>
                                     <th scope="col" rowspan="3"
                                         class="py-2 px-6 bg-gray-100 text-center text-gray-600 border font-semibold">PEMBUAT
-
                                     </th>
-         
                                     <th scope="col" rowspan="3"
                                         class="py-2 px-6 bg-gray-100 text-center text-gray-600 border font-semibold">
                                         PERMASALAHAN</th>
                                     <th scope="col" rowspan="3"
                                         class="py-2 px-6 bg-gray-100 text-center text-gray-600 border font-semibold">DASBOARD NAMESPACE
-    
                                     </th>
                                     <th scope="col" rowspan="3"
                                         class="py-2 px-6 bg-gray-100 text-center text-gray-600 border font-semibold">SASARAN
@@ -81,10 +76,9 @@
                                     <th scope="col" rowspan="3"
                                         class="py-2 px-6 bg-gray-100 text-center text-gray-600 border font-semibold">RENCANA
                                         AKSI</th>
-                                        <th scope="col" rowspan="3"
+                                    <th scope="col" rowspan="3"
                                         class="py-2 px-6 bg-gray-100 text-center text-gray-600 border font-semibold">DASBOARD NAMESPACE RENAKSI
-    
-                                       </th>
+                                    </th>
                                     <th scope="col" colspan="2"
                                         class="py-2 px-6 bg-gray-100 text-center text-gray-600 border font-semibold">OUTPUT
                                     </th>
@@ -95,9 +89,8 @@
                                         class="py-2 px-6 bg-gray-100 text-center text-gray-600 border font-semibold">CAPAIAN
                                         %</th>
                                     <th scope="col" rowspan="3"
-                                        class="py-2 px-6 bg-gray-100 text-center text-gray-600 border font-semibold w-[600px]">
-                                        JENIS KEGIATAN AKSI \ N (TERKAIT ATAU TIDAK TERKAIT LANGSUNG DENGAN MASYARAKAT
-                                        STAKEHOLDER UTAMA)</th>
+                                        class="py-2 px-6 bg-gray-100 text-center text-gray-600 border font-semibold min-w-[400px] break-words leading-tight">
+                                        JENIS KEGIATAN AKSI(TERKAIT ATAU TIDAK TERKAIT LANGSUNG DENGAN MASYARAKAT STAKEHOLDER UTAMA)</th>
                                     <th scope="col" colspan="10"
                                         class="py-2 px-6 bg-gray-100 text-center text-gray-600 border font-semibold">
                                         ANGGARAN</th>
@@ -108,12 +101,11 @@
                                         class="py-2 px-6 bg-gray-100 text-center text-gray-600 border font-semibold">UNIT /
                                         SATUAN PELAKSANA</th>
                                     <th scope="col" rowspan="3"
-                                        class="py-2 px-6 bg-gray-100 text-center text-gray-600 border font-semibold">Documentasi File
+                                        class="py-2 px-6 bg-gray-100 text-center text-gray-600 border font-semibold">DOKUMENTASI FILE
                                     </th>
                                     <th scope="col" rowspan="3"
                                         class="py-2 px-6 bg-gray-100 text-center text-gray-600 border font-semibold">STATUS
                                     </th>
-
                                     <th scope="col" rowspan="3"
                                         class="py-2 px-6 bg-gray-100 text-center text-gray-600 border font-semibold">AKSI
                                     </th>
@@ -209,8 +201,6 @@
                             </thead>
                             <tbody id="table-body">
                                 <!-- Row with revision enabled -->
-
-
                             </tbody>
                         </table>
                     </div>
@@ -218,7 +208,7 @@
             </div>
         </div>
         <!-- Modal for Reassign -->
-        <div id="reassignModal" class="modal hidden fixed inset-0 flex items-center justify-center z-50">
+        <div id="reassignModal" class="modal hidden fixed inset-0 items-center justify-center z-50">
             <div
                 class="modal-content bg-white p-4 rounded-lg shadow-lg w-full max-w-md sm:max-w-sm md:max-w-md lg:max-w-lg">
                 <h2 class="text-xl font-semibold mb-4">Send Revision Note</h2>

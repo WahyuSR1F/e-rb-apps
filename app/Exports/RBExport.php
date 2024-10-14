@@ -2,6 +2,8 @@
 
 namespace App\Exports;
 
+use App\Models\Cluster;
+use App\Models\ERBType;
 use App\Models\Permasalahan;
 use Maatwebsite\Excel\Events\AfterSheet;
 use Maatwebsite\Excel\Concerns\WithEvents;
@@ -10,9 +12,32 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 
 class RBExport implements FromCollection, WithHeadings, WithEvents
 {
+    protected $idTema;
+    protected $year;
+    protected $namaTema;
+    protected $namaCluster;
+    public function __construct($idTema, $year)
+    {
+        $this->idTema = $idTema;
+        $this->year =  $year;
+        $tema =  $this->getNameTema($idTema);
+        $this->namaTema =  $tema->nama;
+        $cluster = $this->getNameCluster($tema->cluster_id);
+        $this->namaCluster =  $cluster->cluster;
+
+        
+    }
+    protected function getNameTema ($idTema){
+        $tema =  ERBType::where('id', $idTema)->select('cluster_id','nama')->first();
+        return $tema;
+    }
+    protected function getNameCluster ($idCluster){
+        $tema =  Cluster::where('id', $idCluster)->select('id','cluster')->first();
+        return $tema; 
+    }
     public function collection()
     {
-        $data = Permasalahan::with('allRelatedData')->get();
+        $data = Permasalahan::with('allRelatedData')->where('erb_type_id', $this->idTema)->whereYear('created_at', $this->year)->get();
         // Siapkan array untuk data yang akan diekspor
         $exportData = [];
 
@@ -81,11 +106,11 @@ class RBExport implements FromCollection, WithHeadings, WithEvents
     {
         return [
             // Header rows
-            ['Realisasi Rencana Aksi Pelaksanaan Reformasi Birokrasi Pada Dinas Kesehatan Tahun 2024'],
+            ['Realisasi Rencana Aksi Pelaksanaan Reformasi Birokrasi Pada Dinas Kesehatan Tahun '. $this->year],
             ['', 'SKDP', ': DINAS KESEHATAN'],
-            ['', 'Reformasi Birokrasi', ': Tematik'],
-            ['', 'Indikator yang didukung', ': Pengentasan Kemiskinan'],
-            ['', 'Tribulan', ':TWI Tahun 2024'],
+            ['', 'Reformasi Birokrasi', ': '.$this->namaCluster],
+            ['', 'Indikator yang didukung', ': '. $this->namaTema],
+            ['', 'Tribulan', ':TWI Tahun '. $this->year],
             [''],
             ['No', 'PERMASALAHAN', 'SASARAN', 'INDIKATOR', 'TARGET', 'Rencana Aksi', 'OUTPUT', '', 'PENYELESAIAN', '', '', '', '', '', '', '', '', '', 'CAPAIAN %', 'Jenis Kegiatan Aksi \n (Terkait atau tidak terkait langsung dengan Masyarakt Stekholder Utama)', 'ANGGARAN', '', '', '', '', '', '', '', '', '', 'CAPAIAN %', 'UNIT SATUAN PELAKSANAAN'],
             ['', '', '', '', '', '', 'INDIKATOR', 'SATUAN', 'TARGET', '', '', '', '', 'REALISASI', '', '', '', '', '', '', 'TARGET', '', '', '', '', 'REALISASI', '', '', '', '', '', 'KOORDINATOR', 'PELAKSANA'],

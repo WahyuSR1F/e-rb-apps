@@ -51,7 +51,7 @@ Route::middleware(['AuthAccess'])->group(function () {
         Route::post('/renaksi-process', 'createRenaksi')->name('reknaksi-prosess');
         Route::post('/renaksi-edit-process', 'updateRenaksi')->name('renaksi-edit-prosess');
         Route::post('/renaksi-delete-process', 'deleteRenaksi')->name('renaksi-delete-process');
-        Route::get('/export-excel', 'exportExcel')->name('export-excel');
+        Route::post('/export-excel', 'exportExcel')->name('export-excel');
         Route::post('/logout',  'logout')->name('logout');
     });
 

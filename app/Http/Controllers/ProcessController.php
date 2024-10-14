@@ -425,9 +425,13 @@ class ProcessController extends Controller
             return response()->json(['messesage' => $e->getMessage()]);
         }
     }
-    public function exportExcel()
+    public function exportExcel(Request $request)
     {
-        return Excel::download(new RBExport, Str::uuid() . '_user.xlsx');
+        
+        $idTema =  $request->id;
+        $year = $request->year;
+
+        return Excel::download(new RBExport($idTema, $year), Str::uuid() . '_user.xlsx');
     }
 
     protected function GDPutFile($folder, $fileName, $request): void
