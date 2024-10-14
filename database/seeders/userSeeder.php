@@ -24,6 +24,7 @@ class userSeeder extends Seeder
                 'subidang' =>  'admin',
                 'IdPegawai' =>  '0000000001',
                 'role' => 'admincs',
+                'active_user' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

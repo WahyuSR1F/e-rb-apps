@@ -6,7 +6,7 @@ if (typeof baseUrl === "undefined") {
 const itemsPerPage = 10;
 let currentPage = 1;
 
-auth = document.getElementById('auth_token').value; 
+auth = document.getElementById("auth_token").value;
 
 onload = () => {
     loadData();
@@ -80,11 +80,18 @@ function displayData(data, page) {
                         "target-penyelesaian-twIV"
                     )
                 );
+                row.appendChild(
+                    makecell(
+                        data.target_penyelesaian.jumlah,
+                        "target-penyelesaian-total"
+                    )
+                );
             } else {
-                row.appendChild(makecell("-", "target-penyelesaian-twI"));
-                row.appendChild(makecell("-", "target-penyelesaian-twII"));
-                row.appendChild(makecell("-", "target-penyelesaian-twIII"));
-                row.appendChild(makecell("-", "target-penyelesaian-twIV"));
+                row.appendChild(makecell("0", "target-penyelesaian-twI"));
+                row.appendChild(makecell("0", "target-penyelesaian-twII"));
+                row.appendChild(makecell("0", "target-penyelesaian-twIII"));
+                row.appendChild(makecell("0", "target-penyelesaian-twIV"));
+                row.appendChild(makecell("0", "target-penyelesaian-total"));
             }
             if (data.realisasi_penyelesaian != null) {
                 row.appendChild(
@@ -113,17 +120,43 @@ function displayData(data, page) {
                 );
                 row.appendChild(
                     makecell(
-                        data.realisasi_penyelesaian.type,
-                        "realisasi-penyelesaian-type"
+                        data.realisasi_penyelesaian.jumlah,
+                        "realisasi-penyelesaian-jumlah"
+                    )
+                );
+                row.appendChild(
+                    makecell(
+                        formatPersen(
+                            data.realisasi_penyelesaian.presentase,
+                            "realisasi-penyelesaian-capaian"
+                        )
                     )
                 );
             } else {
-                row.appendChild(makecell("-", "realisasi-penyelesaian-twI"));
-                row.appendChild(makecell("-", "realisasi-penyelesaian-twII"));
-                row.appendChild(makecell("-", "realisasi-penyelesaian-twIII"));
-                row.appendChild(makecell("-", "realisasi-penyelesaian-twIV"));
-                row.appendChild(makecell("-", "realisasi-penyelesaian-type"));
+                row.appendChild(makecell("0", "realisasi-penyelesaian-twI"));
+                row.appendChild(makecell("0", "realisasi-penyelesaian-twII"));
+                row.appendChild(makecell("0", "realisasi-penyelesaian-twIII"));
+                row.appendChild(makecell("0", "realisasi-penyelesaian-twIV"));
+                row.appendChild(makecell("0", "realisasi-penyelesaian-jumlah"));
+                row.appendChild(
+                    makecell("0", "realisasi-penyelesaian-capaian")
+                );
             }
+            if (data.target_penyelesaian != null) {
+                if (data.target_penyelesaian.type != null) {
+                    row.appendChild(
+                        makecell(
+                            data.target_penyelesaian.type,
+                            "target-penyelesaian-type"
+                        )
+                    );
+                } else {
+                    row.appendChild(makecell("-", "target-penyelesaian-type"));
+                }
+            } else {
+                row.appendChild(makecell("-", "target-penyelesaian-type"));
+            }
+
             if (data.target_anggaran != null) {
                 row.appendChild(
                     makecell(
@@ -149,11 +182,18 @@ function displayData(data, page) {
                         "target-anggaran-twIV"
                     )
                 );
+                row.appendChild(
+                    makecell(
+                        formatRupiah(data.target_anggaran.jumlah),
+                        "target-anggaran-jumlah"
+                    )
+                );
             } else {
-                row.appendChild(makecell("-", "target-anggaran-twI"));
-                row.appendChild(makecell("-", "target-anggaran-twII"));
-                row.appendChild(makecell("-", "target-anggaran-twIII"));
-                row.appendChild(makecell("-", "target-anggaran-twIV"));
+                row.appendChild(makecell("0", "target-anggaran-twI"));
+                row.appendChild(makecell("0", "target-anggaran-twII"));
+                row.appendChild(makecell("0", "target-anggaran-twIII"));
+                row.appendChild(makecell("0", "target-anggaran-twIV"));
+                row.appendChild(makecell("0", "target-anggaran-jumlah"));
             }
             if (data.realisasi_anggaran != null) {
                 row.appendChild(
@@ -186,12 +226,21 @@ function displayData(data, page) {
                         "realisasi-anggaran-jumlah"
                     )
                 );
+                row.appendChild(
+                    makecell(
+                        formatPersen(
+                            data.realisasi_anggaran.presentase,
+                            "realisasi-anggaran-capaian"
+                        )
+                    )
+                );
             } else {
-                row.appendChild(makecell("-", "realisasi-anggaran-twI"));
-                row.appendChild(makecell("-", "realisasi-anggaran-twII"));
-                row.appendChild(makecell("-", "realisasi-anggaran-twIII"));
-                row.appendChild(makecell("-", "realisasi-anggaran-twIV"));
-                row.appendChild(makecell("-", "realisasi-anggaran-jumlah"));
+                row.appendChild(makecell("0", "realisasi-anggaran-twI"));
+                row.appendChild(makecell("0", "realisasi-anggaran-twII"));
+                row.appendChild(makecell("0", "realisasi-anggaran-twIII"));
+                row.appendChild(makecell("0", "realisasi-anggaran-twIV"));
+                row.appendChild(makecell("0", "realisasi-anggaran-jumlah"));
+                row.appendChild(makecell("0", "realisasi-anggaran-capaian"));
             }
             row.appendChild(
                 makecell(data.koordinator, "rencanaAksi-koordinator")
@@ -315,6 +364,20 @@ function formatRupiah(amount) {
     }).format(amount);
 }
 
+function formatPersen(value) {
+    if (value == null || isNaN(value)) {
+        return "0%";
+    }
+
+    const formatter = new Intl.NumberFormat("en-US", {
+        style: "percent",
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2,
+    });
+
+    return formatter.format(value / 100);
+}
+
 function makeActionButton(value1, color1, value2, color2, row) {
     const Cell = document.createElement("td");
     Cell.classList.add("py-2", "px-4");
@@ -402,11 +465,45 @@ function restoreOriginalRow(row) {
 function makeRowEditable(row) {
     const cells = row.querySelectorAll("td");
     for (let i = 2; i < cells.length - 3; i++) {
-        // Lewatkan kolom pertama (No) dan terakhir (Aksi)
         const currentValue = cells[i].innerText.trim();
-        cells[
-            i
-        ].innerHTML = `<input type="text" class="form-input w-full" value="${currentValue}">`;
+
+        // Lewatkan kolom pertama (No) dan terakhir (Aksi)
+        if (i === 13) continue;
+        if (i === 18) continue;
+        if (i === 19) continue;
+        if (i === 25) continue;
+        if (i === 30) continue;
+        if (i === 31) continue;
+
+        if (i >= 9 && i <= 12) {
+            cells[
+                i
+            ].innerHTML = `<input type="number" class="form-input w-full border border-black p-1" value="${covertInt(
+                currentValue
+            )}">`;
+        } else if (i >= 14 && i <= 17) {
+            cells[
+                i
+            ].innerHTML = `<input type="number" class="form-input w-full border border-black p-1" value="${covertInt(
+                currentValue
+            )}">`;
+        } else if (i >= 21 && i <= 24) {
+            cells[
+                i
+            ].innerHTML = `<input type="number" class="form-input w-full border border-black p-1" value="${covertInt(
+                currentValue
+            )}">`;
+        } else if (i >= 26 && i <= 30) {
+            cells[
+                i
+            ].innerHTML = `<input type="number" class="form-input w-full border border-black p-1" value="${covertInt(
+                currentValue
+            )}">`;
+        } else {
+            cells[
+                i
+            ].innerHTML = `<input type="text" class="form-input w-full border border-black p-1" value="${currentValue}">`;
+        }
     }
 }
 
@@ -443,7 +540,7 @@ async function saveRow(row, id) {
 
     try {
         const res = await axios.post(`${baseUrl}/update-evaluasi/${user_id}`, {
-            token:auth,
+            token: auth,
             reject: {
                 status: "Pending",
             },
@@ -495,6 +592,9 @@ async function saveRow(row, id) {
                         .querySelector(".target-penyelesaian-twIV")
                         .textContent.trim()
                 ),
+                type: row
+                    .querySelector(".target-penyelesaian-type")
+                    .textContent.trim(),
             },
             realisasi_penyelesaian: {
                 twI: parseInt(
@@ -517,9 +617,6 @@ async function saveRow(row, id) {
                         .querySelector(".realisasi-penyelesaian-twIV")
                         .textContent.trim()
                 ),
-                type: row
-                    .querySelector(".realisasi-penyelesaian-type")
-                    .textContent.trim(),
             },
             target_anggaran: {
                 twI: covertInt(
@@ -570,23 +667,30 @@ async function saveRow(row, id) {
             },
         });
 
+        console.log(res.data);
         if (res.status === 200) {
-        //     const Toast = Swal.mixin({
-        //         toast: true,
-        //         position: "top-end",
-        //         showConfirmButton: false,
-        //         timer: 3000,
-        //         timerProgressBar: true,
-        //         didOpen: (toast) => {
-        //             toast.onmouseenter = Swal.stopTimer;
-        //             toast.onmouseleave = Swal.resumeTimer;
-        //         },
-        //     });
-        //     Toast.fire({
-        //         icon: "success",
-        //         title: "Update Data successfully",
-        //     });
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                },
+            });
+            Toast.fire({
+                icon: "success",
+                title: "Update Data successfully",
+            });
             loadData();
+        } else if (res.status === 422) {
+            Swal.fire({
+                title: "Ups Error!",
+                text: "Failed to save data! " + res.body.message,
+                icon: "error",
+            });
         }
     } catch (error) {
         console.log(error);
@@ -597,9 +701,19 @@ async function saveRow(row, id) {
             console.error("Response data:", error.response.data); // Data dari server
             console.error("Response status:", error.response.status); // Status kode
             console.error("Response headers:", error.response.headers); // Header respons
+            Swal.fire({
+                title: "Ups Error!",
+                text: "Failed to save data! " + error.response.data.message,
+                icon: "error",
+            });
         } else if (error.request) {
             // Permintaan telah dibuat tetapi tidak ada respons yang diterima
             console.error("Request data:", error.request);
+            Swal.fire({
+                title: "Ups Error!",
+                text: "Failed to save data! " + error.request,
+                icon: "error",
+            });
         } else {
             // Kesalahan lain
             console.error("Error message:", error.message);

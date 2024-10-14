@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('IdPegawai');
             $table->string('token');
             $table->string('role');
+            $table->integer('active_user')->default(0);
             $table->timestamps();
         });
 

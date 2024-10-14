@@ -1,9 +1,7 @@
-if (typeof baseUrl === 'undefined') {
+if (typeof baseUrl === "undefined") {
     // var baseUrl = 'http://192.168.1.5:8010/api';
     var baseUrl = "http://127.0.0.1:8010/api";
 }
-
-
 
 const rencanaAksiUrl = "{{ route('rencana-aksi')}}";
 window.onload = function () {
@@ -30,55 +28,47 @@ window.onload = function () {
     }
 };
 
+document.addEventListener("DOMContentLoaded", () => {
+    const password = document.getElementById("password");
+    const passwordConfirmation = document.getElementById(
+        "password_confirmation"
+    );
+    const message = document.getElementById("password-message");
+    const submitButton = document.getElementById("submit-button");
 
+    const validatePassword = () => {
+        const passwordLengthValid = password.value.length >= 8;
+        const passwordsMatch = password.value === passwordConfirmation.value;
 
-    document.addEventListener('DOMContentLoaded', () => {
-        const password = document.getElementById('password');
-        const passwordConfirmation = document.getElementById('password_confirmation');
-        const message = document.getElementById('password-message');
-        const submitButton = document.getElementById('submit-button');
+        if (passwordConfirmation.value === "") {
+            message.style.display = "none"; // Hide message if confirmation is empty
+            submitButton.disabled = true; // Disable button
+            return;
+        }
 
-        const validatePassword = () => {
-            const passwordLengthValid = password.value.length >= 8;
-            const passwordsMatch = password.value === passwordConfirmation.value;
-
-            if (passwordConfirmation.value === '') {
-                message.style.display = 'none'; // Hide message if confirmation is empty
-                submitButton.disabled = true; // Disable button
-                return;
-            }
-
-            // Clear message and button state
-            if (passwordLengthValid && passwordsMatch) {
-                message.style.display = 'none';
-                submitButton.disabled = false;
+        // Clear message and button state
+        if (passwordLengthValid && passwordsMatch) {
+            message.style.display = "none";
+            submitButton.disabled = false;
+        } else {
+            message.style.display = "block";
+            if (!passwordLengthValid) {
+                message.textContent = "Password harus minimal 8 karakter!";
             } else {
-                message.style.display = 'block';
-                if (!passwordLengthValid) {
-                    message.textContent = 'Password harus minimal 8 karakter!';
-                } else {
-                    message.textContent = 'Password tidak cocok!';
-                }
-                submitButton.disabled = true; // Disable button if validation fails
+                message.textContent = "Password tidak cocok!";
             }
-        };
+            submitButton.disabled = true; // Disable button if validation fails
+        }
+    };
 
-        password.addEventListener('input', validatePassword);
-        passwordConfirmation.addEventListener('input', validatePassword);
-    });
-
-
-
-
-
-
-
-
+    password.addEventListener("input", validatePassword);
+    passwordConfirmation.addEventListener("input", validatePassword);
+});
 
 // mengambil data
 
 document.addEventListener("DOMContentLoaded", () => {
-    auth = document.getElementById('auth_token').value; 
+    auth = document.getElementById("auth_token").value;
     // Replace with your actual base URL
     const tableBody = document.getElementById("table-body");
     const searchInput = document.getElementById("default-search");
@@ -91,11 +81,10 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
             const response = await axios.get(`${baseUrl}/get-user-paginate`, {
                 params: {
-                    token:auth,
+                    token: auth,
                     page: page,
                     search: search,
                     perPage: perPage,
-
                 },
             });
             const data = response.data;
@@ -120,7 +109,8 @@ document.addEventListener("DOMContentLoaded", () => {
             );
 
             row.innerHTML = `
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">${index + 1
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">${
+                    index + 1
                 }</th>
                  <td class="px-6 py-4 font-medium text-gray-900 dark:text-white">
                     ${item.username}
@@ -138,27 +128,30 @@ document.addEventListener("DOMContentLoaded", () => {
                     ${item.role}
                 </td>
                  <td class="px-6 py-4">
-                    ${item.active_user === 1 ? 'Aktif' : 'Tidak Aktif'}
+                    ${item.active_user === 1 ? "Aktif" : "Tidak Aktif"}
                     
                 </td>
                 <td class="px-6 py-4">
                  
-                    <button data-id="${item.id
-                }" data-modal-target="UserModal" data-modal-toggle="UserModal" class="px-2 text-xs my-1 w-full py-3 bg-yellow-400 text-white font-bold text-center hover:bg-yellow-700 rounded">
+                    <button data-id="${
+                        item.id
+                    }" data-modal-target="UserModal" data-modal-toggle="UserModal" class="px-2 text-xs my-1 w-full py-3 bg-yellow-400 text-white font-bold text-center hover:bg-yellow-700 rounded">
                         <div class="flex justify-center">
                             <p class="text-gray-200"><i class="fa-regular fa-pen-to-square text-lg text-white"></i></p>
                             <p class="mx-1 mt-2">Edit</p>
                         </div>
                     </button>
-                     <button data-id="${item.id
-                }" data-modal-target="ResetModal" data-modal-toggle="ResetModal" class="px-2 text-xs my-1 w-full py-3 bg-blue-400 text-white font-bold text-center hover:bg-yellow-700 rounded">
+                     <button data-id="${
+                         item.id
+                     }" data-modal-target="ResetModal" data-modal-toggle="ResetModal" class="px-2 text-xs my-1 w-full py-3 bg-blue-400 text-white font-bold text-center hover:bg-yellow-700 rounded">
                         <div class="flex justify-center">
                             <p class="text-gray-200"><i class="fa-regular fa-pen-to-square text-lg text-white"></i></p>
                             <p class="mx-1 mt-2">Reset Password</p>
                         </div>
                     </button>
-                    <button data-id="${item.id
-                }" data-modal-target="popup-modal2" data-modal-toggle="popup-modal2" class="px-2 text-xs my-1 block w-full py-3 bg-red-400 text-white font-bold text-center hover:bg-red-700 rounded">
+                    <button data-id="${
+                        item.id
+                    }" data-modal-target="popup-modal2" data-modal-toggle="popup-modal2" class="px-2 text-xs my-1 block w-full py-3 bg-red-400 text-white font-bold text-center hover:bg-red-700 rounded">
                         <div class="flex justify-center">
                             <p class="text-gray-200"><i class="fa-regular fa-trash-can text-white text-lg"></i></p>
                             <p class="mx-1 mt-2">Delete</p>
@@ -177,17 +170,17 @@ document.addEventListener("DOMContentLoaded", () => {
                 window.location.href = "/rencana-aksi";
             });
         });
-        tableBody.addEventListener('click', (event) => {
-            const target = event.target.closest('[data-modal-toggle]');
+        tableBody.addEventListener("click", (event) => {
+            const target = event.target.closest("[data-modal-toggle]");
             if (target) {
-              const modalId = target.getAttribute('data-modal-target');
-              const modal = document.getElementById(modalId);
-              if (modal) {
-                const modalInstance = new Modal(modal);
-                modalInstance.toggle();
-              }
+                const modalId = target.getAttribute("data-modal-target");
+                const modal = document.getElementById(modalId);
+                if (modal) {
+                    const modalInstance = new Modal(modal);
+                    modalInstance.toggle();
+                }
             }
-          });
+        });
     };
 
     const updatePagination = (data) => {
@@ -217,9 +210,10 @@ document.addEventListener("DOMContentLoaded", () => {
         for (let i = 1; i <= data.last_page; i++) {
             const li = document.createElement("li");
             li.innerHTML = `
-                <a href="#" class="flex items-center justify-center px-4 h-10 leading-tight ${i === currentPage
-                    ? "text-blue-600 border border-blue-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white"
-                    : "text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                <a href="#" class="flex items-center justify-center px-4 h-10 leading-tight ${
+                    i === currentPage
+                        ? "text-blue-600 border border-blue-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white"
+                        : "text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                 }">${i}</a>
             `;
             li.addEventListener("click", (e) => {
@@ -252,23 +246,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const showEditModalUser = async (id) => {
         try {
-            const response = await axios.get(
-                `${baseUrl}/get-user-by-id`,
-                {  params:{token:auth, id} }
-            );
+            const response = await axios.get(`${baseUrl}/get-user-by-id`, {
+                params: { token: auth, id },
+            });
             const data = response.data.data;
             console.log(data);
 
             //get value barisnya
-            if(data.active_user === 1){
-                document.getElementById('status_aktive').textContent = "Aktif";
-            }else{
-                document.getElementById('status_aktive').textContent = "Non Aktif";
+            if (data.active_user === 1) {
+                document.getElementById("status_aktive").textContent = "Aktif";
+            } else {
+                document.getElementById("status_aktive").textContent =
+                    "Non Aktif";
             }
-            document.getElementById('status_aktive').value = data.active_user;
-              
+            document.getElementById("status_aktive").value = data.active_user;
 
-            document.getElementById('status_aktive').value = data.active_user;
+            document.getElementById("status_aktive").value = data.active_user;
             document.getElementById("id").value = data.id;
             document.getElementById("username").value = data.username;
             document.getElementById("nama").value = data.nama;
@@ -285,55 +278,56 @@ document.addEventListener("DOMContentLoaded", () => {
     };
     const showResetModalUser = async (id) => {
         try {
-            const response = await axios.get(
-                `${baseUrl}/get-user-by-id`,
-                {  params:{token:auth, id} }
-            );
+            const response = await axios.get(`${baseUrl}/get-user-by-id`, {
+                params: { token: auth, id },
+            });
             const data = response.data.data;
             console.log(data);
 
             //get load modal
-            document.getElementById('id_reset').value = data.id;
+            document.getElementById("id_reset").value = data.id;
             const crudModal = document.getElementById("ResetModal");
             crudModal.classList.remove("hidden");
 
-            const password = document.getElementById('password_reset');
-            const passwordConfirmation = document.getElementById('password_confirmation_reset');
-            const message = document.getElementById('password-message_reset');
-            const submitButton = document.getElementById('submit-button_reset');
-    
+            const password = document.getElementById("password_reset");
+            const passwordConfirmation = document.getElementById(
+                "password_confirmation_reset"
+            );
+            const message = document.getElementById("password-message_reset");
+            const submitButton = document.getElementById("submit-button_reset");
+
             const validatePassword = () => {
                 const passwordLengthValid = password.value.length >= 8;
-                const passwordsMatch = password.value === passwordConfirmation.value;
-    
-                if (passwordConfirmation.value === '') {
-                    message.style.display = 'none'; // Hide message if confirmation is empty
+                const passwordsMatch =
+                    password.value === passwordConfirmation.value;
+
+                if (passwordConfirmation.value === "") {
+                    message.style.display = "none"; // Hide message if confirmation is empty
                     submitButton.disabled = true; // Disable button
                     return;
                 }
-    
+
                 // Clear message and button state
                 if (passwordLengthValid && passwordsMatch) {
-                    message.style.display = 'none';
+                    message.style.display = "none";
                     submitButton.disabled = false;
                 } else {
-                    message.style.display = 'block';
+                    message.style.display = "block";
                     if (!passwordLengthValid) {
-                        message.textContent = 'Password harus minimal 8 karakter!';
+                        message.textContent =
+                            "Password harus minimal 8 karakter!";
                     } else {
-                        message.textContent = 'Password tidak cocok!';
+                        message.textContent = "Password tidak cocok!";
                     }
                     submitButton.disabled = true; // Disable button if validation fails
                 }
             };
-    
-            password.addEventListener('input', validatePassword);
-            passwordConfirmation.addEventListener('input', validatePassword);
 
+            password.addEventListener("input", validatePassword);
+            passwordConfirmation.addEventListener("input", validatePassword);
 
             //     data.cluster;
             //get untuk value modal
-
         } catch (error) {
             console.error("Failed to load data: ", error);
         }
@@ -342,7 +336,7 @@ document.addEventListener("DOMContentLoaded", () => {
     //jika tombol di klik
     document.body.addEventListener("click", async (event) => {
         if (event.target.closest("[data-modal-target='UserModal']")) {
-            console.log('hello');
+            console.log("hello");
             const id = event.target
                 .closest("[data-id]")
                 .getAttribute("data-id");
@@ -352,7 +346,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.body.addEventListener("click", async (event) => {
         if (event.target.closest("[data-modal-target='ResetModal']")) {
-            console.log('hello');
+            console.log("hello");
             const id = event.target
                 .closest("[data-id]")
                 .getAttribute("data-id");
@@ -363,7 +357,7 @@ document.addEventListener("DOMContentLoaded", () => {
     //jika tombol delete di klik
     document.body.addEventListener("click", async (event) => {
         if (event.target.closest("[data-modal-target='popup-modal2']")) {
-            console.log('hello');
+            console.log("hello");
             const id = event.target
                 .closest("[data-id]")
                 .getAttribute("data-id");
