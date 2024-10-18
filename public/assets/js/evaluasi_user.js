@@ -23,69 +23,42 @@ const loadData = async () => {
     }
 };
 
+
+
+
 function displayData(data, page) {
     const start = (page - 1) * itemsPerPage;
     const end = page * itemsPerPage;
     const paginatedItems = data.slice(start, end);
-    console.log(paginatedItems);
-
-    // Dapatkan elemen tabel di mana data akan ditampilkan
+    
     const tableBody = document.getElementById("table-body");
-
-    // Kosongkan tabel sebelumnya
     tableBody.innerHTML = "";
 
-    console.log(data);
+    paginatedItems.forEach((item, index) => {
+        item.renaksi.forEach((renaksiItem, renaksiIndex) => {
+            const row = document.createElement("tr");
+            row.classList.add("border-b", "table-row");
 
-    paginatedItems.forEach((data, index) => {
-        // Tambahkan data ke tabel
-        const row = document.createElement("tr");
-        row.classList.add("border-b", "table-row");
+            // Add cells to the row
+            const id = row.appendChild(makecell(item.id, "id"));
+            id.classList.add("hidden");
+            row.appendChild(makecell(index + 1, "no"));
+            row.appendChild(makecell(item.permasalahan, "permasalahan"));
+            row.appendChild(makecell(item.sasaran, "sasaran"));
+            row.appendChild(makecell(item.indikator, "indikator"));
+            row.appendChild(makecell(item.target, "target"));
 
-        // Tambahkan sel ke baris
-        const id = row.appendChild(makecell(data.id, "id"));
-        id.classList.add("hidden");
-        row.appendChild(makecell(index + 1, "no"));
-        row.appendChild(makecell(data.permasalahan, "permasalahan"));
-        row.appendChild(makecell(data.sasaran, "sasaran"));
-        row.appendChild(makecell(data.indikator, "indikator"));
-        row.appendChild(makecell(data.target, "target"));
+            row.appendChild(makecell(renaksiItem.rencana_aksi, "rencana-aksi"));
+            row.appendChild(makecell(renaksiItem.indikator, "rencanaAksi-indikator"));
+            row.appendChild(makecell(renaksiItem.satuan, "rencanaAksi-satuan"));
 
-        paginatedItems[index].renaksi.forEach((data) => {
-            row.appendChild(makecell(data.rencana_aksi, "rencana-aksi"));
-            row.appendChild(makecell(data.indikator, "rencanaAksi-indikator"));
-            row.appendChild(makecell(data.satuan, "rencanaAksi-satuan"));
-            if (data.target_penyelesaian != null) {
-                row.appendChild(
-                    makecell(
-                        data.target_penyelesaian.twI,
-                        "target-penyelesaian-twI"
-                    )
-                );
-                row.appendChild(
-                    makecell(
-                        data.target_penyelesaian.twII,
-                        "target-penyelesaian-twII"
-                    )
-                );
-                row.appendChild(
-                    makecell(
-                        data.target_penyelesaian.twIII,
-                        "target-penyelesaian-twIII"
-                    )
-                );
-                row.appendChild(
-                    makecell(
-                        data.target_penyelesaian.twIV,
-                        "target-penyelesaian-twIV"
-                    )
-                );
-                row.appendChild(
-                    makecell(
-                        data.target_penyelesaian.jumlah,
-                        "target-penyelesaian-total"
-                    )
-                );
+            // Target Penyelesaian
+            if (renaksiItem.target_penyelesaian) {
+                row.appendChild(makecell(renaksiItem.target_penyelesaian.twI, "target-penyelesaian-twI"));
+                row.appendChild(makecell(renaksiItem.target_penyelesaian.twII, "target-penyelesaian-twII"));
+                row.appendChild(makecell(renaksiItem.target_penyelesaian.twIII, "target-penyelesaian-twIII"));
+                row.appendChild(makecell(renaksiItem.target_penyelesaian.twIV, "target-penyelesaian-twIV"));
+                row.appendChild(makecell(renaksiItem.target_penyelesaian.jumlah, "target-penyelesaian-total"));
             } else {
                 row.appendChild(makecell("0", "target-penyelesaian-twI"));
                 row.appendChild(makecell("0", "target-penyelesaian-twII"));
@@ -93,101 +66,38 @@ function displayData(data, page) {
                 row.appendChild(makecell("0", "target-penyelesaian-twIV"));
                 row.appendChild(makecell("0", "target-penyelesaian-total"));
             }
-            if (data.realisasi_penyelesaian != null) {
-                row.appendChild(
-                    makecell(
-                        data.realisasi_penyelesaian.twI,
-                        "realisasi-penyelesaian-twI"
-                    )
-                );
-                row.appendChild(
-                    makecell(
-                        data.realisasi_penyelesaian.twII,
-                        "realisasi-penyelesaian-twII"
-                    )
-                );
-                row.appendChild(
-                    makecell(
-                        data.realisasi_penyelesaian.twIII,
-                        "realisasi-penyelesaian-twIII"
-                    )
-                );
-                row.appendChild(
-                    makecell(
-                        data.realisasi_penyelesaian.twIV,
-                        "realisasi-penyelesaian-twIV"
-                    )
-                );
-                row.appendChild(
-                    makecell(
-                        data.realisasi_penyelesaian.jumlah,
-                        "realisasi-penyelesaian-jumlah"
-                    )
-                );
-                row.appendChild(
-                    makecell(
-                        formatPersen(
-                            data.realisasi_penyelesaian.presentase,
-                            "realisasi-penyelesaian-capaian"
-                        )
-                    )
-                );
+
+            // Realisasi Penyelesaian
+            if (renaksiItem.realisasi_penyelesaian) {
+                row.appendChild(makecell(renaksiItem.realisasi_penyelesaian.twI, "realisasi-penyelesaian-twI"));
+                row.appendChild(makecell(renaksiItem.realisasi_penyelesaian.twII, "realisasi-penyelesaian-twII"));
+                row.appendChild(makecell(renaksiItem.realisasi_penyelesaian.twIII, "realisasi-penyelesaian-twIII"));
+                row.appendChild(makecell(renaksiItem.realisasi_penyelesaian.twIV, "realisasi-penyelesaian-twIV"));
+                row.appendChild(makecell(renaksiItem.realisasi_penyelesaian.jumlah, "realisasi-penyelesaian-jumlah"));
+                row.appendChild(makecell(formatPersen(renaksiItem.realisasi_penyelesaian.presentase), "realisasi-penyelesaian-capaian"));
             } else {
                 row.appendChild(makecell("0", "realisasi-penyelesaian-twI"));
                 row.appendChild(makecell("0", "realisasi-penyelesaian-twII"));
                 row.appendChild(makecell("0", "realisasi-penyelesaian-twIII"));
                 row.appendChild(makecell("0", "realisasi-penyelesaian-twIV"));
                 row.appendChild(makecell("0", "realisasi-penyelesaian-jumlah"));
-                row.appendChild(
-                    makecell("0", "realisasi-penyelesaian-capaian")
-                );
-            }
-            if (data.target_penyelesaian != null) {
-                if (data.target_penyelesaian.type != null) {
-                    row.appendChild(
-                        makecell(
-                            data.target_penyelesaian.type,
-                            "target-penyelesaian-type"
-                        )
-                    );
-                } else {
-                    row.appendChild(makecell("-", "target-penyelesaian-type"));
-                }
-            } else {
-                row.appendChild(makecell("-", "target-penyelesaian-type"));
+                row.appendChild(makecell("0", "realisasi-penyelesaian-capaian"));
             }
 
-            if (data.target_anggaran != null) {
-                row.appendChild(
-                    makecell(
-                        formatRupiah(data.target_anggaran.twI),
-                        "target-anggaran-twI"
-                    )
-                );
-                row.appendChild(
-                    makecell(
-                        formatRupiah(data.target_anggaran.twII),
-                        "target-anggaran-twII"
-                    )
-                );
-                row.appendChild(
-                    makecell(
-                        formatRupiah(data.target_anggaran.twIII),
-                        "target-anggaran-twIII"
-                    )
-                );
-                row.appendChild(
-                    makecell(
-                        formatRupiah(data.target_anggaran.twIV),
-                        "target-anggaran-twIV"
-                    )
-                );
-                row.appendChild(
-                    makecell(
-                        formatRupiah(data.target_anggaran.jumlah),
-                        "target-anggaran-jumlah"
-                    )
-                );
+            // Target Penyelesaian Type
+            // if (renaksiItem.target_penyelesaian && renaksiItem.target_penyelesaian.type) {
+            //     row.appendChild(makecell(renaksiItem.target_penyelesaian.type, "target-penyelesaian-type"));
+            // } else {
+                row.appendChild(makecell(renaksiItem.target_penyelesaian.subjek, "target-penyelesaian-type"));
+            // }
+
+            // Target Anggaran
+            if (renaksiItem.target_anggaran) {
+                row.appendChild(makecell(formatRupiah(renaksiItem.target_anggaran.twI), "target-anggaran-twI"));
+                row.appendChild(makecell(formatRupiah(renaksiItem.target_anggaran.twII), "target-anggaran-twII"));
+                row.appendChild(makecell(formatRupiah(renaksiItem.target_anggaran.twIII), "target-anggaran-twIII"));
+                row.appendChild(makecell(formatRupiah(renaksiItem.target_anggaran.twIV), "target-anggaran-twIV"));
+                row.appendChild(makecell(formatRupiah(renaksiItem.target_anggaran.jumlah), "target-anggaran-jumlah"));
             } else {
                 row.appendChild(makecell("0", "target-anggaran-twI"));
                 row.appendChild(makecell("0", "target-anggaran-twII"));
@@ -195,45 +105,15 @@ function displayData(data, page) {
                 row.appendChild(makecell("0", "target-anggaran-twIV"));
                 row.appendChild(makecell("0", "target-anggaran-jumlah"));
             }
-            if (data.realisasi_anggaran != null) {
-                row.appendChild(
-                    makecell(
-                        formatRupiah(data.realisasi_anggaran.twI),
-                        "realisasi-anggaran-twI"
-                    )
-                );
-                row.appendChild(
-                    makecell(
-                        formatRupiah(data.realisasi_anggaran.twII),
-                        "realisasi-anggaran-twII"
-                    )
-                );
-                row.appendChild(
-                    makecell(
-                        formatRupiah(data.realisasi_anggaran.twIII),
-                        "realisasi-anggaran-twIII"
-                    )
-                );
-                row.appendChild(
-                    makecell(
-                        formatRupiah(data.realisasi_anggaran.twIV),
-                        "realisasi-anggaran-twIV"
-                    )
-                );
-                row.appendChild(
-                    makecell(
-                        formatRupiah(data.realisasi_anggaran.jumlah),
-                        "realisasi-anggaran-jumlah"
-                    )
-                );
-                row.appendChild(
-                    makecell(
-                        formatPersen(
-                            data.realisasi_anggaran.presentase,
-                            "realisasi-anggaran-capaian"
-                        )
-                    )
-                );
+
+            // Realisasi Anggaran
+            if (renaksiItem.realisasi_anggaran) {
+                row.appendChild(makecell(formatRupiah(renaksiItem.realisasi_anggaran.twI), "realisasi-anggaran-twI"));
+                row.appendChild(makecell(formatRupiah(renaksiItem.realisasi_anggaran.twII), "realisasi-anggaran-twII"));
+                row.appendChild(makecell(formatRupiah(renaksiItem.realisasi_anggaran.twIII), "realisasi-anggaran-twIII"));
+                row.appendChild(makecell(formatRupiah(renaksiItem.realisasi_anggaran.twIV), "realisasi-anggaran-twIV"));
+                row.appendChild(makecell(formatRupiah(renaksiItem.realisasi_anggaran.jumlah), "realisasi-anggaran-jumlah"));
+                row.appendChild(makecell(formatPersen(renaksiItem.realisasi_anggaran.presentase), "realisasi-anggaran-capaian"));
             } else {
                 row.appendChild(makecell("0", "realisasi-anggaran-twI"));
                 row.appendChild(makecell("0", "realisasi-anggaran-twII"));
@@ -242,37 +122,38 @@ function displayData(data, page) {
                 row.appendChild(makecell("0", "realisasi-anggaran-jumlah"));
                 row.appendChild(makecell("0", "realisasi-anggaran-capaian"));
             }
-            row.appendChild(
-                makecell(data.koordinator, "rencanaAksi-koordinator")
-            );
-            row.appendChild(makecell(data.pelaksana, "rencanaAksi-pelaksana"));
-            row.appendChild(
-                makeStatus(
-                    data.reject.status,
-                    "reject-status",
-                    data.reject.status == "Rejected"
-                        ? "bg-red-500"
-                        : "bg-gray-400"
-                )
-            );
-            row.appendChild(makecell(data.reject.comment, "reject-comment"));
 
-            // Tambahkan tombol edit dan save
-            if (data.reject.status == "Rejected") {
-                row.appendChild(
-                    makeActionButton(
-                        "edit",
-                        "bg-yellow",
-                        "save",
-                        "bg-green",
-                        row
-                    )
-                );
+            row.appendChild(makecell(renaksiItem.koordinator, "rencanaAksi-koordinator"));
+            row.appendChild(makecell(renaksiItem.pelaksana, "rencanaAksi-pelaksana"));
+            row.appendChild(makeStatus(renaksiItem.reject.status, "reject-status", renaksiItem.reject.status == "Rejected" ? "bg-red-500" : renaksiItem.reject.status == "Approved" ? "bg-green-400" : renaksiItem.reject.status == "Pending" ? "bg-yellow-400": "bg-gray-500"));
+            row.appendChild(makecell(renaksiItem.reject.comment, "reject-comment"));
+
+            // Add edit and save buttons
+            if (renaksiItem.reject.status == "Rejected") {
+                hasRejectedStatus = true;
+                row.appendChild(makeActionButton("edit", "bg-yellow", "save", "bg-green", row));
             }
+            
+            tableBody.appendChild(row);
         });
-
-        tableBody.appendChild(row);
     });
+    updateSidebarButtonColor(hasRejectedStatus);
+}
+
+function updateSidebarButtonColor(hasRejectedStatus) {
+    const evaluasiLink = document.querySelector('a[href*="evaluasi"]');
+    if (evaluasiLink) {
+        if (hasRejectedStatus) {
+            evaluasiLink.classList.add('bg-red-500');
+            evaluasiLink.classList.remove('hover:bg-gray-100', 'dark:hover:bg-gray-700');
+            // Update text color for better visibility on red background
+            evaluasiLink.classList.add('text-white');
+            evaluasiLink.classList.remove('text-gray-900', 'dark:text-white');
+        } else {
+            evaluasiLink.classList.remove('bg-red-500', 'text-white');
+            evaluasiLink.classList.add('hover:bg-gray-100', 'dark:hover:bg-gray-700', 'text-gray-900', 'dark:text-white');
+        }
+    }
 }
 
 // Fungsi untuk membuat tombol navigasi halaman

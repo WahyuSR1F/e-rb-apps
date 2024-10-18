@@ -1,5 +1,20 @@
 @extends('component.component-admin-dasboard.body-admin-dasboard')
 @section('judul', 'E-RB')
+
+@if (session('success'))
+    <div id="alert"
+        class="fixed bottom-4 right-4 z-50 bg-green-500 text-white px-4 py-3 rounded-md shadow-lg animate-bounce-once">
+        <span><i class="fa-solid fa-circle-check text-lg mx-1 text-white"></i></span>{{ session('success') }}
+    </div>
+@endif
+
+@if (session('error'))
+    <div id="alert"
+        class="fixed bottom-4 right-4 z-50 bg-red-500 text-white px-4 py-3 rounded-md shadow-lg animate-bounce-once">
+        <span><i class="fa-solid fa-circle-exclamation text-lg mx-1 text-white"></i></span>{{ session('error') }}
+    </div>
+@endif
+
 @section('viewer')
 
     <div class="mt-[5rem]">
@@ -84,7 +99,7 @@
                                     </th>
                                     <th scope="col" colspan="10"
                                         class="py-2 px-6 bg-gray-100 text-center text-gray-600 border font-semibold">
-                                        PENYELESAIAN</th>
+                                        KINERJA</th>
                                     <th scope="col" rowspan="3"
                                         class="py-2 px-6 bg-gray-100 text-center text-gray-600 border font-semibold">CAPAIAN
                                         %</th>

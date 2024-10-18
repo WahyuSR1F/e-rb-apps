@@ -146,7 +146,7 @@ async function loadPermasalahan(temaId, year, startDate, endDate) {
         permasalahans.forEach(item => {
             const option = document.createElement('option');
             option.value = item.id;
-            option.textContent = item.unique_namespace + ' ' + item.permasalahan;
+            option.textContent = '[ '+ item.unique_namespace + ' ] ' + item.permasalahan;
             selectElement.appendChild(option);
         });
     } catch (error) {
@@ -170,7 +170,7 @@ async function loadRenaksi(permasalahanId, year, startDate, endDate) {
         renaksi.forEach(item => {
             const option = document.createElement('option');
             option.value = item.id;
-            option.textContent = item.unique_namespace + ' ' + item.rencana_aksi;
+            option.textContent = '[ '+item.unique_namespace + ' ] ' + item.rencana_aksi;
             selectElement.appendChild(option);
         });
     } catch (error) {
@@ -180,6 +180,7 @@ async function loadRenaksi(permasalahanId, year, startDate, endDate) {
 
 document.addEventListener('DOMContentLoaded', function(){
     auth = document.getElementById('auth_token').value; 
+    console.log(auth);
     fetchData('2024');
     loadClusters(auth)
 });
@@ -402,7 +403,7 @@ document.getElementById('renaksi-select').addEventListener('change', async funct
                 borderWidth: 1
             },
             {
-                label: `Anggaran`,
+                label: `Realisasi`,
                 data: dataCapaian,
                 backgroundColor: createGradient(ctx, 'rgba(255, 99, 132, 0.8)', 'rgba(255, 99, 132, 0.2)'),
                 borderColor: 'rgba(255, 99, 132, 1)',

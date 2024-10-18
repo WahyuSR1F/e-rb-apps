@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('subidang');
             $table->string('IdPegawai');
             $table->string('token');
+            $table->boolean('active_user');
             $table->string('role');
             $table->timestamps();
         });

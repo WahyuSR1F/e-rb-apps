@@ -227,7 +227,7 @@
                     </button>
                 </div>
                 <!-- Modal body -->
-                <form class="p-4 md:p-5" action="{{ route('realisasi-penyelesaian-edit') }}" method="post"
+                <form id="myForm" class="p-4 md:p-5" action="{{ route('realisasi-penyelesaian-edit') }}" method="post"
                     enctype="multipart/form-data">
                     @csrf
 
@@ -284,7 +284,7 @@
                                 terhapus !!!</span>
                         </div>
                     </div>
-                    <button type="submit"
+                    <button id="save-button" type="submit"
                         class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                         <svg class="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg">
@@ -357,7 +357,7 @@
                     </button>
                 </div>
                 <!-- Modal body -->
-                <form action="{{ route('realisasi-penyelesaian-create') }}" method="post" enctype="multipart/form-data"
+                <form id="myForm" action="{{ route('realisasi-penyelesaian-create') }}" method="post" enctype="multipart/form-data"
                     class="p-4 md:p-5">
                     @csrf
                     <div class="grid gap-4 mb-4 grid-cols-2">
@@ -403,7 +403,7 @@
 
                         </div>
                     </div>
-                    <button type="submit"
+                    <button id="save-button" type="submit"
                         class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                         <svg class="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg">

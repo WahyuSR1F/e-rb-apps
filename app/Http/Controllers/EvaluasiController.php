@@ -51,6 +51,7 @@ class EvaluasiController extends Controller
 
     // fungsi update data
     public function updateEvaluasi(Request $request, $user_id){
+     
         // validasi inputan permasalahan
     
         $validate = $request->validate([
@@ -88,7 +89,7 @@ class EvaluasiController extends Controller
             'realisasi_anggaran.twIV' => 'required|integer|min:1',
             
 
-            'reject.status' => 'required|string',
+    
         ]);
 
         if ($validate === false) {

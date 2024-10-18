@@ -215,6 +215,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
             tableBody.appendChild(row);
         });
+
+        document.addEventListener('click', (event) => {
+            const target = event.target.closest('[data-modal-target]');
+            const close = event.target.closest('[data-modal-toggle]');
+            console.log(close);
+            if (target) {
+                const modalId = target.getAttribute('data-modal-target');
+                const modal = document.getElementById(modalId);
+                if (modal) {
+                    const modalInstance = new Modal(modal);
+                     modalInstance.toggle();
+                    
+                    
+                }
+            } else if (close) {
+                const modalId = close.getAttribute('data-modal-toggle');
+                const modal = document.getElementById(modalId);
+                if (modal) {
+                    const modalInstance = new Modal(modal);
+                     modalInstance.hide();
+                    
+                    
+                }
+            }
+            
+        });
+
         tableBody.addEventListener('click', (event) => {
             const target = event.target.closest('[data-modal-toggle]');
             if (target) {
@@ -226,6 +253,8 @@ document.addEventListener("DOMContentLoaded", () => {
               }
             }
           });
+        
+        
     };
 
     const updatePagination = (data) => {

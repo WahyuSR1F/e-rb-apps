@@ -41,125 +41,70 @@ function createTableRow(items, item, index) {
     row.classList.add("border", "table-row");
     row.setAttribute("data-id", item.id);
     
+    // Helper function to format number as Rupiah
+    const formatRupiah = (number) => {
+        return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(number);
+    };
+
+    // Helper function to create cell content
+    const createCellContent = (value, isAnggaran) => {
+        if (isAnggaran && value !== null) {
+            return formatRupiah(value);
+        }
+        return value ?? '';
+    };
+    
     row.innerHTML = `
         <td class="py-2 px-4 border text-center">${index + 1}</td>
-        <td data-name="permasalahan" class="py-2 px-4 border text-center">${items.pembuat?.nama ?? ''}</td>
+        <td data-name="pembuat" class="py-2 px-4 border text-center">${items.pembuat?.nama ?? ''}</td>
         <td data-name="permasalahan" class="py-2 px-4 border">${items.permasalahan ?? ''}</td>
-        <td data-name="permasalahan" class="py-2 px-4 border text-center">${
-                                    items.unique_namespace ?? null
-                                }</td>
-                                <td data-name="sasaran" class="py-2 px-4 border">${
-                                    items.sasaran ?? null
-                                }</</td>
-                                <td data-name="indikator" class="py-2 px-4 border">${
-                                    items.indikator ?? null
-                                }</td>
-                                <td data-name="target" class="py-2 px-4 border text-center">${
-                                    items.target ?? null
-                                }</td>
-                                <td data-name="rencana_aksi" class="py-2 px-4 border">${
-                                    item.rencana_aksi ?? null
-                                }</td>
-                                <td data-name="permasalahan" class="py-2 px-4 border text-center">${
-                                    item.unique_namespace ?? null
-                                }</td>
-                                <td data-name="indikator_rencana_aksi" class="py-2 px-4 border">${
-                                    item.indikator ?? null
-                                }</td>
-                                <td data-name="satuan" class="py-2 px-4 border text-center">${
-                                    item.satuan ?? null
-                                }</td>
-                                <td data-name="twI_target_penyelesaian" class="py-2 px-4 border text-center">${
-                                    item.target_penyelesaian?.twI ?? null
-                                }</td>
-                                <td data-name="twII_target_penyelesaian" class="py-2 px-4 border text-center">${
-                                    item.target_penyelesaian?.twII ?? null
-                                }</td>
-                                <td data-name="twIII_target_penyelesaian" class="py-2 px-4 border text-center">${
-                                    item.target_penyelesaian?.twIII ?? null
-                                }</td>
-                                <td data-name="twIV_target_penyelesaian" class="py-2 px-4 border text-center">${
-                                    item.target_penyelesaian?.twIV ?? null
-                                }</td>
-                                <td data-name="jumlah_target_penyelesaian" class="py-2 px-4 border text-center">${
-                                    item.target_penyelesaian?.jumlah ?? null
-                                }</td>
-                                <td data-name="twI_realisasi_penyelesaian" class="py-2 px-4 border text-center">${
-                                    item.realisasi_penyelesaian?.twI ?? null
-                                }</td>
-                                <td data-name="twII_realisasi_penyelesaian" class="py-2 px-4 border text-center">${
-                                    item.realisasi_penyelesaian?.twII ?? null
-                                }</td>
-                                <td data-name="twIII_realisasi_penyelesaian" class="py-2 px-4 border text-center">${
-                                    item.realisasi_penyelesaian?.twIII ?? null
-                                }</td>
-                                <td data-name="twIV_realisasi_penyelesaian" class="py-2 px-4 border text-center">${
-                                    item.realisasi_penyelesaian?.twIV ?? null
-                                }</td>
-                                <td data-name="jumlah_realisasi_penyelesaian" class="py-2 px-4 border text-center">${
-                                    item.realisasi_penyelesaian?.jumlah ?? null
-                                }</td>
-                                <td data-name="presentase_realisasi_penyelesaian" class="py-2 px-4 border text-center">${
-                                    item.realisasi_penyelesaian?.presentase ?? null
-                                }</td>
-                                <td data-name="subjek" class="py-2 px-4 border text-center">${
-                                    item.target_penyelesaian?.subjek ?? null
-                                }</td>
-                                <td data-name="twI_target_anggaran" class="py-2 px-4 border text-center">${
-                                    item.target_anggaran?.twI ?? null
-                                }</td>
-                                <td data-name="twII_target_anggaran" class="py-2 px-4 border text-center">${
-                                    item.target_anggaran?.twII ?? null
-                                }</td>
-                                <td data-name="twIII_target_anggaran" class="py-2 px-4 border text-center">${
-                                    item.target_anggaran?.twIII ?? null
-                                }</td>
-                                <td data-name="twIV_target_anggaran" class="py-2 px-4 border text-center">${
-                                    item.target_anggaran?.twIV ?? null
-                                }</td>
-                                <td data-name="jumlah_target_anggaran" class="py-2 px-4 border text-center">${
-                                    item.target_anggaran?.jumlah ?? null
-                                }</td>
-                                <td data-name="twI_realisasi_anggaran" class="py-2 px-4 border text-center">${
-                                    item.realisasi_anggaran?.twI ?? null
-                                }</td>
-                                <td data-name="twII_realisasi_anggaran" class="py-2 px-4 border text-center">${
-                                    item.realisasi_anggaran?.twII ?? null
-                                }</td>
-                                <td data-name="twIII_realisasi_anggaran" class="py-2 px-4 border text-center">${
-                                    item.realisasi_anggaran?.twIII ?? null
-                                }</td>
-                                <td data-name="twIV_realisasi_anggaran" class="py-2 px-4 border text-center">${
-                                    item.realisasi_anggaran?.twIV ?? null
-                                }</td>
-                                <td data-name="jumlah_realisasi_anggaran" class="py-2 px-4 border text-center">${
-                                    item.realisasi_anggaran?.jumlah ?? null
-                                }</td>
-                                <td data-name="presentase_realisasi_anggaran" class="py-2 px-4 border text-center">${
-                                    item.realisasi_anggaran?.presentase ?? null
-                                }</td>
-                                <td data-name="koordinator" class="py-2 px-4 border text-center">${
-                                    item.koordinator ?? null
-                                }</td>
-                                <td data-name="pelaksana" class="py-2 px-4 border text-center">${
-                                    item.pelaksana ?? null
-                                }</td>
-                                <td data-name="document" class="py-2 px-4 border text-center">
-                                    ${item.file_assets ? `
-                                        <button 
-                                            data-id="${item.file_assets && item.file_assets.file_path ? item.file_assets.file_path : ''
-                                            }/${item.file_assets && item.file_assets.file_name ? item.file_assets.file_name : ''
-                                            }"
-                                            data-modal-target="ShowFile"
-                                            data-modal-toggle="ShowFile"
-                                            class="px-3 py-2 w-50% bg-blue-500 text-white text-center hover:bg-blue-700 rounded">
-                                            <div class="flex justify-center">
-                                                <p class="text-gray-200"><i class="fa-regular fa-file text-sm text-white"></i></p>
-                                                <p class="mx-1 tex-sm font-semibold">File</p>
-                                            </div>
-                                        </button>
-                                    ` : 'Tidak Ada File Documentasi'}
-                                </td>
+        <td data-name="unique_namespace_permasalahan" class="py-2 px-4 border text-center">${items.unique_namespace ?? ''}</td>
+        <td data-name="sasaran" class="py-2 px-4 border">${items.sasaran ?? ''}</td>
+        <td data-name="indikator" class="py-2 px-4 border">${items.indikator ?? ''}</td>
+        <td data-name="target" class="py-2 px-4 border text-center">${items.target ?? ''}</td>
+        <td data-name="rencana_aksi" class="py-2 px-4 border">${item.rencana_aksi ?? ''}</td>
+        <td data-name="unique_namespace_renaksi" class="py-2 px-4 border text-center">${item.unique_namespace ?? ''}</td>
+        <td data-name="indikator_rencana_aksi" class="py-2 px-4 border">${item.indikator ?? ''}</td>
+        <td data-name="satuan" class="py-2 px-4 border text-center">${item.satuan ?? ''}</td>
+        <td data-name="twI_target_penyelesaian" class="py-2 px-4 border text-center">${createCellContent(item.target_penyelesaian?.twI)}</td>
+        <td data-name="twII_target_penyelesaian" class="py-2 px-4 border text-center">${createCellContent(item.target_penyelesaian?.twII)}</td>
+        <td data-name="twIII_target_penyelesaian" class="py-2 px-4 border text-center">${createCellContent(item.target_penyelesaian?.twIII)}</td>
+        <td data-name="twIV_target_penyelesaian" class="py-2 px-4 border text-center">${createCellContent(item.target_penyelesaian?.twIV)}</td>
+        <td data-name="jumlah_target_penyelesaian" class="py-2 px-4 border text-center">${createCellContent(item.target_penyelesaian?.jumlah)}</td>
+        <td data-name="twI_realisasi_penyelesaian" class="py-2 px-4 border text-center">${createCellContent(item.realisasi_penyelesaian?.twI)}</td>
+        <td data-name="twII_realisasi_penyelesaian" class="py-2 px-4 border text-center">${createCellContent(item.realisasi_penyelesaian?.twII)}</td>
+        <td data-name="twIII_realisasi_penyelesaian" class="py-2 px-4 border text-center">${createCellContent(item.realisasi_penyelesaian?.twIII)}</td>
+        <td data-name="twIV_realisasi_penyelesaian" class="py-2 px-4 border text-center">${createCellContent(item.realisasi_penyelesaian?.twIV)}</td>
+        <td data-name="jumlah_realisasi_penyelesaian" class="py-2 px-4 border text-center">${createCellContent(item.realisasi_penyelesaian?.jumlah)}</td>
+        <td data-name="presentase_realisasi_penyelesaian" class="py-2 px-4 border text-center">${createCellContent(item.realisasi_penyelesaian?.presentase)}</td>
+        <td data-name="subjek" class="py-2 px-4 border text-center">${item.target_penyelesaian?.subjek ?? ''}</td>
+        <td data-name="twI_target_anggaran" class="py-2 px-4 border text-center">${createCellContent(item.target_anggaran?.twI, true)}</td>
+        <td data-name="twII_target_anggaran" class="py-2 px-4 border text-center">${createCellContent(item.target_anggaran?.twII, true)}</td>
+        <td data-name="twIII_target_anggaran" class="py-2 px-4 border text-center">${createCellContent(item.target_anggaran?.twIII, true)}</td>
+        <td data-name="twIV_target_anggaran" class="py-2 px-4 border text-center">${createCellContent(item.target_anggaran?.twIV, true)}</td>
+        <td data-name="jumlah_target_anggaran" class="py-2 px-4 border text-center">${createCellContent(item.target_anggaran?.jumlah, true)}</td>
+        <td data-name="twI_realisasi_anggaran" class="py-2 px-4 border text-center">${createCellContent(item.realisasi_anggaran?.twI, true)}</td>
+        <td data-name="twII_realisasi_anggaran" class="py-2 px-4 border text-center">${createCellContent(item.realisasi_anggaran?.twII, true)}</td>
+        <td data-name="twIII_realisasi_anggaran" class="py-2 px-4 border text-center">${createCellContent(item.realisasi_anggaran?.twIII, true)}</td>
+        <td data-name="twIV_realisasi_anggaran" class="py-2 px-4 border text-center">${createCellContent(item.realisasi_anggaran?.twIV, true)}</td>
+        <td data-name="jumlah_realisasi_anggaran" class="py-2 px-4 border text-center">${createCellContent(item.realisasi_anggaran?.jumlah, true)}</td>
+        <td data-name="presentase_realisasi_anggaran" class="py-2 px-4 border text-center">${createCellContent(item.realisasi_anggaran?.presentase)}</td>
+        <td data-name="koordinator" class="py-2 px-4 border text-center">${item.koordinator ?? ''}</td>
+        <td data-name="pelaksana" class="py-2 px-4 border text-center">${item.pelaksana ?? ''}</td>
+        <td data-name="document" class="py-2 px-4 border text-center">
+            ${item.file_assets ? `
+                <button 
+                    data-id="${item.file_assets.file_path || ''}/${item.file_assets.file_name || ''}"
+                    data-modal-target="ShowFile"
+                    data-modal-toggle="ShowFile"
+                    class="px-3 py-2 w-50% bg-blue-500 text-white text-center hover:bg-blue-700 rounded">
+                    <div class="flex justify-center">
+                        <p class="text-gray-200"><i class="fa-regular fa-file text-sm text-white"></i></p>
+                        <p class="mx-1 tex-sm font-semibold">File</p>
+                    </div>
+                </button>
+            ` : 'Tidak Ada File Documentasi'}
+        </td>
         <td data-name="status" class="status-cell py-2 px-3 border text-center">
             ${getStatusBadge(item.reject ? item.reject.status : null)}
         </td>
@@ -181,6 +126,7 @@ function createTableRow(items, item, index) {
     
     return row;
 }
+
 
 // Function to update button visibility
 function updateButtonVisibility(row) {
@@ -238,6 +184,9 @@ async function saveRow(row, idPermasalahan, idRenaksi) {
     inputs.forEach((input) => {
         rowData[input.name] = input.value;
     });
+    console.log("hello");
+    console.log(rowData);
+    
 
     try {
         const response = await axios.post(`${baseUrl}/update-by-admin`, rowData);
@@ -281,11 +230,18 @@ function makeRowEditable(row) {
     const cells = row.querySelectorAll("[data-name]");
     cells.forEach((cell) => {
         const columnName = cell.getAttribute("data-name");
-        if (!["status", "document"].includes(columnName)) {
+        if (!["status", "jumlah_realisasi_anggaran", "presentase_realisasi_anggaran", "jumlah_target_anggaran", "presentase_realisasi_penyelesaian", "jumlah_realisasi_penyelesaian", "jumlah_target_penyelesaian", "document", 'pembuat'].includes(columnName)) {
             const input = document.createElement("input");
-            input.type = columnName.includes("tw") ? "number" : "text";
+            input.type = columnName.includes("tw") || columnName.includes("anggaran") ? "number" : "text";
             input.name = columnName;
-            input.value = cell.textContent;
+            
+            // Remove Rupiah formatting for anggaran fields
+            if (columnName.includes("anggaran")) {
+                input.value = cell.textContent.replace(/Rp\s?/, '').replace(/\./g, '').replace(/,00$/, '');
+            } else {
+                input.value = cell.textContent;
+            }
+            
             input.classList.add("border", "border-black", "w-full");
             cell.textContent = '';
             cell.appendChild(input);
@@ -349,13 +305,13 @@ function closeModal() {
 // Function to get status badge HTML
 function getStatusBadge(status) {
     if (status === 'Approved') {
-        return `<span class="bg-green-500 text-white px-3 py-2 rounded">${status}</span>`;
+        return `<span class="bg-green-500 text-white px-2 py-1 rounded-full">${status}</span>`;
     } else if (status === 'Pending') {
-        return `<span class="bg-yellow-500 text-white px-3 py-2 rounded">${status}</span>`;
+        return `<span class="bg-yellow-500 text-white px-2 py-1 rounded-full">${status}</span>`;
     } else if (status === 'Rejected') {
-        return `<span class="bg-red-500 text-white px-3 py-2 rounded">${status}</span>`;
+        return `<span class="bg-red-500 text-white px-2 py-1 rounded-full">${status}</span>`;
     } else {
-        return `<span class="bg-gray-500 text-white px-3 py-2 rounded">Normal</span>`;
+        return `<span class="bg-gray-500 text-white px-2 py-1 rounded-full">Normal</span>`;
     }
 }
 

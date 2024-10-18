@@ -88,12 +88,12 @@
 
                 <button id="createButton" data-modal-target="create-modal" data-modal-toggle="create-modal"
                     class="p-2 bg-blue-400 text-white font-bold hover:bg-blue-700 rounded-lg"><span><i
-                            class="fa-solid fa-plus text-white text-xl mx-1"></i></span>Create Target Anggaran</button>
+                            class="fa-solid fa-plus text-white text-xl mx-1"></i></span>Create Realisasi Anggaran</button>
             </div>
             <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 rounded-lg">
                 <caption
                     class="p-5 text-lg font-semibold  rounded-t-lg text-left rtl:text-right text-gray-900 bg-white dark:text-white dark:bg-gray-800 rounded-top">
-                    Target Anggaran
+                    Realisasi Anggaran
                     <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Data Program Sunting di Kab
                         Banyuwangi</p>
                     <div class="flex justify-end">
@@ -133,7 +133,7 @@
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
                         <th scope="col" rowspan="2" class="px-6 py-3 border">No</th>
-                        <th scope="col" colspan="4" class="px-6 py-4 text-center border ">Target Anggaran</th>
+                        <th scope="col" colspan="4" class="px-6 py-4 text-center border ">Relisasi Anggaran</th>
                         <th scope="col" rowspan="2" class="px-6 py-3 text-left border ">JUMLAH ANGGARAN (RP.)</th>
                         <th scope="col" rowspan="2" class="px-6 py-3 text-left border ">Realisasi Anggaran</th>
                         <th scope="col" rowspan="2" class="px-6 py-3 text-left border ">Capaian(%)</th>
@@ -291,7 +291,7 @@
                 <!-- Modal header -->
                 <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
                     <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-                        Create Target Anggaran
+                        Create Realisasi Anggaran
                     </h3>
                     <button type="button"
                         class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"

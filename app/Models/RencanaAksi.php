@@ -49,6 +49,7 @@ class RencanaAksi extends Model
             $b->realisasiAnggaran()->delete();
             $b->realisasiPenyelesaian()->delete();
             $b->FileAssets()->delete();
+            $b->reject()->delete();
         });
     }
     public function permasalahan()

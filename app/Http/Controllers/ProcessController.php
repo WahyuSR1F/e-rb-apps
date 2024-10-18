@@ -264,7 +264,9 @@ class ProcessController extends Controller
                 $query->where('rencana_aksi', 'like', "%{$search}%")->orWhere('indikator', 'like', "%{$search}%")->orWhere('satuan', 'like', '%{$search}%');
             }
 
-            $data =  $query->where('permasalahan_id', $request->id)->paginate($perPage);
+            $data =  $query->where('permasalahan_id', $request->id)->whereDoesntHave('reject', function($query) {
+                $query->where('status', 'Approved');
+            })->paginate($perPage);
             $data = (new HelpersController())->ChangeFormatArray($data);
 
 
