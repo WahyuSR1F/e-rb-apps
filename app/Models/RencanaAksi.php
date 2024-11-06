@@ -73,6 +73,7 @@ class RencanaAksi extends Model
     {
         return $this->hasOne(RealisasiPenyelesaian::class);
     }
+
     public function reject()
     {
         return $this->hasOne(Reject::class);

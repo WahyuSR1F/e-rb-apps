@@ -51,9 +51,10 @@ class EvaluasiController extends Controller
 
     // fungsi update data
     public function updateEvaluasi(Request $request, $user_id){
-     
-        // validasi inputan permasalahan
     
+        // validasi inputan permasalahan
+        
+      
         $validate = $request->validate([
             'permasalahan' => 'required|array',
             'permasalahan.permasalahan' => 'required|string',
@@ -67,26 +68,26 @@ class EvaluasiController extends Controller
             'rencana_aksi.koordinator' => 'required|string',
             'rencana_aksi.pelaksana' => 'required|string',
 
-            'target_penyelesaian.twI' => 'required|integer|min:1',
-            'target_penyelesaian.twII' => 'required|integer|min:1',
-            'target_penyelesaian.twIII' => 'required|integer|min:1',
-            'target_penyelesaian.twIV' => 'required|integer|min:1',
+            'target_penyelesaian.twI' => 'required|integer',
+            'target_penyelesaian.twII' => 'required|integer',
+            'target_penyelesaian.twIII' => 'required|integer',
+            'target_penyelesaian.twIV' => 'required|integer',
 
-            'realisasi_penyelesaian.twI' => 'required|integer|min:1',
-            'realisasi_penyelesaian.twII' => 'required|integer|min:1',
-            'realisasi_penyelesaian.twIII' => 'required|integer|min:1',
-            'realisasi_penyelesaian.twIV' => 'required|integer|min:1',
+            'realisasi_penyelesaian.twI' => 'required|integer',
+            'realisasi_penyelesaian.twII' => 'required|integer',
+            'realisasi_penyelesaian.twIII' => 'required|integer',
+            'realisasi_penyelesaian.twIV' => 'required|integer',
             'target_penyelesaian.type' => 'required|string',
 
-            'target_anggaran.twI' => 'required|integer|min:1',
-            'target_anggaran.twII' => 'required|integer|min:1',
-            'target_anggaran.twIII' => 'required|integer|min:1',
-            'target_anggaran.twIV' => 'required|integer|min:1',
+            'target_anggaran.twI' => 'required|integer',
+            'target_anggaran.twII' => 'required|integer',
+            'target_anggaran.twIII' => 'required|integer',
+            'target_anggaran.twIV' => 'required|integer',
 
-            'realisasi_anggaran.twI' => 'required|integer|min:1',
-            'realisasi_anggaran.twII' => 'required|integer|min:1',
-            'realisasi_anggaran.twIII' => 'required|integer|min:1',
-            'realisasi_anggaran.twIV' => 'required|integer|min:1',
+            'realisasi_anggaran.twI' => 'required|integer',
+            'realisasi_anggaran.twII' => 'required|integer',
+            'realisasi_anggaran.twIII' => 'required|integer',
+            'realisasi_anggaran.twIV' => 'required|integer',
             
 
     
@@ -111,7 +112,7 @@ class EvaluasiController extends Controller
             $data->update($request->permasalahan);
             
             // update rencana aksi
-            $dataRencanaAksi = RencanaAksi::where('user_id', $user_id)->where('permasalahan_id', $request->rencana_aksi['permasalahan_id'])->first();
+            $dataRencanaAksi = RencanaAksi::where('user_id', $user_id)->where('id', $request->rencana_aksi['renaksi_id'])->first();
             if ($dataRencanaAksi == null) {
                 return response()->json([
                     'status' => 'failed',
@@ -129,53 +130,57 @@ class EvaluasiController extends Controller
             // check if target penyelesaian exists then update
             if ($dataTargetPenyelesaian) {
                 // check if type is partial
-                if ($request->target_penyelesaian['type'] == 'Partial') {
+                if ($dataTargetPenyelesaian->type == 'Parsial') {
                     $dataTargetPenyelesaian->update([
                         'twI' => $request->target_penyelesaian['twI'],
                         'twII' => $request->target_penyelesaian['twII'],
                         'twIII' => $request->target_penyelesaian['twIII'],
                         'twIV' => $request->target_penyelesaian['twIV'],
-                        'type' => $request->target_penyelesaian['type'],
+                        'subjek' => $request->target_penyelesaian['type'],
                         'jumlah' => $maxTotal,
                     ]);
-                }else if ($request->target_penyelesaian['type'] == 'Kumulatif') {
+                }else if ($$dataTargetPenyelesaian->type == 'Kumulatif') {
                     $dataTargetPenyelesaian->update([
                         'twI' => $request->target_penyelesaian['twI'],
                         'twII' => $request->target_penyelesaian['twII'],
                         'twIII' => $request->target_penyelesaian['twIII'],
                         'twIV' => $request->target_penyelesaian['twIV'],
-                        'type' => $request->target_penyelesaian['type'],
+                        'subjek' => $request->target_penyelesaian['type'],
                         'jumlah' => $sumTotal,
                     ]);
                 }
             // create new target penyelesaian
             }else{
                 // check if type is partial
-                if($request->target_penyelesaian['type'] == 'Partial') {
-                    TargetPenyelesaian::create([
-                        'id' => Str::uuid(),
-                        'rencana_aksi_id' => $dataRencanaAksi->id,
-                        'user_id' => $user_id,
-                        'twI' => $request->target_penyelesaian['twI'],
-                        'twII' => $request->target_penyelesaian['twII'],
-                        'twIII' => $request->target_penyelesaian['twIII'],
-                        'twIV' => $request->target_penyelesaian['twIV'],
-                        'type' => $request->target_penyelesaian['type'],
-                        'jumlah' => $maxTotal,
-                    ]);
-                }else if ($request->target_penyelesaian['type'] == 'Kumulatif') {
-                    TargetPenyelesaian::create([
-                        'id' => Str::uuid(),
-                        'rencana_aksi_id' => $dataRencanaAksi->id,
-                        'user_id' => $user_id,
-                        'twI' => $request->target_penyelesaian['twI'],
-                        'twII' => $request->target_penyelesaian['twII'],
-                        'twIII' => $request->target_penyelesaian['twIII'],
-                        'twIV' => $request->target_penyelesaian['twIV'],
-                        'type' => $request->target_penyelesaian['type'],
-                        'jumlah' => $sumTotal,
-                    ]);
-                }
+                // if($request->target_penyelesaian['type'] == 'Partial') {
+                //     TargetPenyelesaian::create([
+                //         'id' => Str::uuid(),
+                //         'rencana_aksi_id' => $dataRencanaAksi->id,
+                //         'user_id' => $user_id,
+                //         'twI' => $request->target_penyelesaian['twI'],
+                //         'twII' => $request->target_penyelesaian['twII'],
+                //         'twIII' => $request->target_penyelesaian['twIII'],
+                //         'twIV' => $request->target_penyelesaian['twIV'],
+                //         'type' => $request->target_penyelesaian['type'],
+                //         'jumlah' => $maxTotal,
+                //     ]);
+                // }else if ($request->target_penyelesaian['type'] == 'Kumulatif') {
+                //     TargetPenyelesaian::create([
+                //         'id' => Str::uuid(),
+                //         'rencana_aksi_id' => $dataRencanaAksi->id,
+                //         'user_id' => $user_id,
+                //         'twI' => $request->target_penyelesaian['twI'],
+                //         'twII' => $request->target_penyelesaian['twII'],
+                //         'twIII' => $request->target_penyelesaian['twIII'],
+                //         'twIV' => $request->target_penyelesaian['twIV'],
+                //         'type' => $request->target_penyelesaian['type'],
+                //         'jumlah' => $sumTotal,
+                //     ]);
+                // }
+
+                return response()->json(['messesage' => 'maaf banyak data yang kosong, mohon pengisian lewat fitur Reformasi Birokrasi !!!']);
+
+                
             }
 
 
@@ -186,7 +191,7 @@ class EvaluasiController extends Controller
             $dataRealisasiPenyelesaian = $dataRencanaAksi->realisasiPenyelesaian()->first();
             // check if realisasi penyelesaian exists then update
             if ($dataRealisasiPenyelesaian) {
-                if ($request->target_penyelesaian['type'] == 'Partial') {
+                if ($dataTargetPenyelesaian->type == 'Parsial') {
                     $dataRealisasiPenyelesaian->update([
                         'twI' => $request->realisasi_penyelesaian['twI'],
                         'twII' => $request->realisasi_penyelesaian['twII'],
@@ -195,7 +200,7 @@ class EvaluasiController extends Controller
                         'jumlah' => $maxTotalReal,
                         'presentase' => $sumTotalReal / $sumTotal * 100,
                     ]);
-                }else if ($request->target_penyelesaian['type'] == 'Kumulatif') {
+                }else if ($dataTargetPenyelesaian->type == 'Kumulatif') {
                     $dataRealisasiPenyelesaian->update([
                         'twI' => $request->realisasi_penyelesaian['twI'],
                         'twII' => $request->realisasi_penyelesaian['twII'],
@@ -206,7 +211,7 @@ class EvaluasiController extends Controller
                     ]);
                 }
             }else{
-                if ($request->target_penyelesaian['type'] == 'Partial') {
+                if ($dataTargetPenyelesaian->type == 'Parsial') {
                     RealisasiPenyelesaian::create([
                         'id' => Str::uuid(),
                         'rencana_aksi_id' => $dataRencanaAksi->id,
@@ -218,7 +223,7 @@ class EvaluasiController extends Controller
                         'jumlah' => $maxTotalReal,
                         'presentase' => $sumTotalReal / $sumTotal * 100,
                     ]);
-                }else if ($request->target_penyelesaian['type'] == 'Kumulatif') {
+                }else if ($dataTargetPenyelesaian->type == 'Kumulatif') {
                     RealisasiPenyelesaian::create([
                         'id' => Str::uuid(),
                         'rencana_aksi_id' => $dataRencanaAksi->id,
@@ -303,7 +308,9 @@ class EvaluasiController extends Controller
                     'message' => 'data reject not found',
                 ], 404);
             }
-            $dataReject->update($request->reject);
+            $dataReject->update([
+                'status' =>  $request->reject['status']
+            ]);
 
             return response()->json([
                     'status' => 'success',

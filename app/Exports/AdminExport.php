@@ -3,6 +3,7 @@
 namespace App\Exports;
 
 use App\Models\Permasalahan;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Events\AfterSheet;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\WithHeadings;
@@ -22,25 +23,19 @@ class AdminExport implements FromCollection, WithHeadings, WithEvents
     public function collection()
     {
         $currentYear = now()->year;
-
-        $data = Permasalahan::where('erb_type_id', $this->idTema)
-            ->whereHas('renaksi.reject', function ($query) {
-                $query->where('status', 'Approved');
-            })
-            ->with(['renaksi' => function ($query) {
-                $query->whereHas('reject', function ($q) {
-                    $q->where('status', 'Approved');
-                })->with('reject');
-            }])
-            ->with(['renaksi' => function ($query) {
-                $query->whereHas('reject', function ($q) {
-                    $q->where('status', 'Approved');
-                })->with('reject');
-            }])
-            ->with(['renaksi.targetAnggaran', 'renaksi.targetPenyelesaian', 'renaksi.realisasiAnggaran', 'renaksi.realisasiPenyelesaian'])
-            ->whereYear('created_at', $currentYear) // or 'updated_at' depending on your needs
-            ->get();
-
+        $data = $data = Permasalahan::where('erb_type_id', $this->idTema)
+        ->whereHas('renaksi', function ($query) {
+            $query->whereHas('reject', function($q) {
+                $q->where('status', 'Approved');
+            });
+        })
+        ->with(['allRelatedData' => function($query) {
+            $query->whereHas('reject', function($q) {
+                $q->where('status', 'Approved');
+            });
+        }])
+        ->get();
+        
         // Siapkan array untuk data yang akan diekspor
         $exportData = [];
 

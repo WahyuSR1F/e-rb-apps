@@ -1,5 +1,5 @@
 if (typeof baseUrl === "undefined") {
-    var baseUrl = "http://127.0.0.1:8010/api";
+    var baseUrl = window.location.origin + '/api';
 }
 
 // Variabel global
@@ -34,14 +34,17 @@ function displayData(data, page) {
     const tableBody = document.getElementById("table-body");
     tableBody.innerHTML = "";
 
-    paginatedItems.forEach((item, index) => {
-        item.renaksi.forEach((renaksiItem, renaksiIndex) => {
+    paginatedItems.forEach((item) => {
+        
+        item.renaksi.forEach((renaksiItem, index) => {
             const row = document.createElement("tr");
             row.classList.add("border-b", "table-row");
 
             // Add cells to the row
             const id = row.appendChild(makecell(item.id, "id"));
+            const idRenaksi = row.appendChild(makecell(renaksiItem.id, "id_renaksi"))
             id.classList.add("hidden");
+            idRenaksi.classList.add("hidden");
             row.appendChild(makecell(index + 1, "no"));
             row.appendChild(makecell(item.permasalahan, "permasalahan"));
             row.appendChild(makecell(item.sasaran, "sasaran"));
@@ -349,32 +352,32 @@ function makeRowEditable(row) {
         const currentValue = cells[i].innerText.trim();
 
         // Lewatkan kolom pertama (No) dan terakhir (Aksi)
-        if (i === 13) continue;
-        if (i === 18) continue;
+        if (i === 14) continue;
         if (i === 19) continue;
-        if (i === 25) continue;
-        if (i === 30) continue;
+        if (i === 20) continue;
+        if (i === 26) continue;
         if (i === 31) continue;
+        if (i === 32) continue;
 
-        if (i >= 9 && i <= 12) {
+        if (i >= 10 && i <= 13) {
             cells[
                 i
             ].innerHTML = `<input type="number" class="form-input w-full border border-black p-1" value="${covertInt(
                 currentValue
             )}">`;
-        } else if (i >= 14 && i <= 17) {
+        } else if (i >= 15 && i <= 18) {
             cells[
                 i
             ].innerHTML = `<input type="number" class="form-input w-full border border-black p-1" value="${covertInt(
                 currentValue
             )}">`;
-        } else if (i >= 21 && i <= 24) {
+        } else if (i >= 22 && i <= 25) {
             cells[
                 i
             ].innerHTML = `<input type="number" class="form-input w-full border border-black p-1" value="${covertInt(
                 currentValue
             )}">`;
-        } else if (i >= 26 && i <= 30) {
+        } else if (i >= 27 && i <= 31) {
             cells[
                 i
             ].innerHTML = `<input type="number" class="form-input w-full border border-black p-1" value="${covertInt(
@@ -404,12 +407,15 @@ function covertInt(row) {
 }
 
 function handleSave(row) {
-    const id = row.querySelector(".id").textContent; // Ambil ID dari elemen yang sesuai
-    saveRow(row, id); // Panggil saveRow dengan ID
+    console.log(row);
+    const id = row.querySelector(".id").textContent; 
+    const id_Renaksi =  row.querySelector(".id_renaksi").textContent;// Ambil ID dari elemen yang sesuai
+    console.log(id_Renaksi);
+    saveRow(row, id, id_Renaksi); // Panggil saveRow dengan ID
 }
 
 // Fungsi untuk menyimpan baris yang sudah diedit
-async function saveRow(row, id) {
+async function saveRow(row, id, id_renaksi) {
     const inputs = row.querySelectorAll("input");
     inputs.forEach((input) => {
         const td = input.closest("td");
@@ -436,6 +442,7 @@ async function saveRow(row, id) {
             },
             rencana_aksi: {
                 permasalahan_id: id,
+                renaksi_id: id_renaksi,
                 rencana_aksi: row
                     .querySelector(".rencana-aksi")
                     .textContent.trim(),

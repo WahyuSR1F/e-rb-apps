@@ -369,8 +369,8 @@ class RejectCpntroller extends Controller
                 'id' => Str::uuid(),
                 'rencana_aksi_id' => $renaksi->id,
                 'user_id' => $renaksi->user_id,
-                'comment' => $request->comment,
-                'status' => 'Rejected'
+                'comment' => $request->note,
+                'status' => 'Rejected',
             ]);
         }
 
