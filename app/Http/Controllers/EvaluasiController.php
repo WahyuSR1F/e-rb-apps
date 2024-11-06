@@ -130,7 +130,7 @@ class EvaluasiController extends Controller
             // check if target penyelesaian exists then update
             if ($dataTargetPenyelesaian) {
                 // check if type is partial
-                if ($dataTargetPenyelesaian->type == 'Parsial') {
+                if ($dataTargetPenyelesaian->type == 'parsial') {
                     $dataTargetPenyelesaian->update([
                         'twI' => $request->target_penyelesaian['twI'],
                         'twII' => $request->target_penyelesaian['twII'],
@@ -139,7 +139,7 @@ class EvaluasiController extends Controller
                         'subjek' => $request->target_penyelesaian['type'],
                         'jumlah' => $maxTotal,
                     ]);
-                }else if ($$dataTargetPenyelesaian->type == 'Kumulatif') {
+                }else if ($$dataTargetPenyelesaian->type == 'kumulatif') {
                     $dataTargetPenyelesaian->update([
                         'twI' => $request->target_penyelesaian['twI'],
                         'twII' => $request->target_penyelesaian['twII'],
@@ -191,7 +191,7 @@ class EvaluasiController extends Controller
             $dataRealisasiPenyelesaian = $dataRencanaAksi->realisasiPenyelesaian()->first();
             // check if realisasi penyelesaian exists then update
             if ($dataRealisasiPenyelesaian) {
-                if ($dataTargetPenyelesaian->type == 'Parsial') {
+                if ($dataTargetPenyelesaian->type == 'parsial') {
                     $dataRealisasiPenyelesaian->update([
                         'twI' => $request->realisasi_penyelesaian['twI'],
                         'twII' => $request->realisasi_penyelesaian['twII'],
@@ -200,7 +200,7 @@ class EvaluasiController extends Controller
                         'jumlah' => $maxTotalReal,
                         'presentase' => $sumTotalReal / $sumTotal * 100,
                     ]);
-                }else if ($dataTargetPenyelesaian->type == 'Kumulatif') {
+                }else if ($dataTargetPenyelesaian->type == 'kumulatif') {
                     $dataRealisasiPenyelesaian->update([
                         'twI' => $request->realisasi_penyelesaian['twI'],
                         'twII' => $request->realisasi_penyelesaian['twII'],
@@ -211,7 +211,7 @@ class EvaluasiController extends Controller
                     ]);
                 }
             }else{
-                if ($dataTargetPenyelesaian->type == 'Parsial') {
+                if ($dataTargetPenyelesaian->type == 'parsial') {
                     RealisasiPenyelesaian::create([
                         'id' => Str::uuid(),
                         'rencana_aksi_id' => $dataRencanaAksi->id,
@@ -223,7 +223,7 @@ class EvaluasiController extends Controller
                         'jumlah' => $maxTotalReal,
                         'presentase' => $sumTotalReal / $sumTotal * 100,
                     ]);
-                }else if ($dataTargetPenyelesaian->type == 'Kumulatif') {
+                }else if ($dataTargetPenyelesaian->type == 'kumulatif') {
                     RealisasiPenyelesaian::create([
                         'id' => Str::uuid(),
                         'rencana_aksi_id' => $dataRencanaAksi->id,

@@ -101,37 +101,11 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("twIIITarget1").textContent = targets.twIII;
         document.getElementById("twIVTarget1").textContent = targets.twIV;
 
-        document.getElementById("twICreate").addEventListener("input", function () {
-            validateInput(this, targets.twI);
-        });
-        document.getElementById("twIICreate").addEventListener("input", function () {
-            validateInput(this, targets.twII);
-        });
-        document.getElementById("twIIICreate").addEventListener("input", function () {
-            validateInput(this, targets.twIII);
-        });
-        document.getElementById("twIVCreate").addEventListener("input", function () {
-            validateInput(this, targets.twIV);
-        });
-
-
         document.getElementById("twITarget").textContent = targets.twI;
         document.getElementById("twIITarget").textContent = targets.twII;
         document.getElementById("twIIITarget").textContent = targets.twIII;
         document.getElementById("twIVTarget").textContent = targets.twIV;
 
-        document.getElementById("twIEdit").addEventListener("input", function () {
-            validateInput(this, targets.twI);
-        });
-        document.getElementById("twIIEdit").addEventListener("input", function () {
-            validateInput(this, targets.twII);
-        });
-        document.getElementById("twIIIEdit").addEventListener("input", function () {
-            validateInput(this, targets.twIII);
-        });
-        document.getElementById("twIVEdit").addEventListener("input", function () {
-            validateInput(this, targets.twIV);
-        });
     }
     addTarget();
 

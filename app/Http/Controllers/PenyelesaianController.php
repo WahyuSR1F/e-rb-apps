@@ -93,7 +93,7 @@ class PenyelesaianController extends Controller
                 'type' => 'required|string'
             ]);
 
-            if ($request->type === 'Parsial') {
+            if ($request->type === 'parsial') {
                 $jumlahTarget = max(intval($request->twI), intval($request->twII), intval($request->twIII), intval($request->twIV));
             } else {
                 $jumlahTarget = intval($request->twI ?? 0) + intval($request->twII ?? 0) + intval($request->twIII ?? 0) + intval($request->twIV ?? 0);
@@ -136,7 +136,7 @@ class PenyelesaianController extends Controller
 
 
             $update = TargetPenyelesaian::where('id', $request->id)->first();
-            if ($update->type === 'Parsial') {
+            if ($update->type === 'parsial') {
                 $jumlahTarget = max(intval($request->twI), intval($request->twII), intval($request->twIII), intval($request->twIV));
             } else {
                 $jumlahTarget = intval($request->twI ?? 0) + intval($request->twII ?? 0) + intval($request->twIII ?? 0) + intval($request->twIV ?? 0);
@@ -258,7 +258,7 @@ class PenyelesaianController extends Controller
 
 
             $data =  TargetPenyelesaian::where('rencana_aksi_id', $request->id)->first();
-            if ($data->type == 'Parsial') {
+            if ($data->type == 'parsial') {
                 $jumlahTarget = max(intval($data->twI), intval($data->twII), intval($data->twIII), intval($data->twIV));
                 $jumlahRealisasi = max(intval($request->twI ?? 0), intval($request->twII ?? 0), intval($request->twIII ?? 0), intval($request->twIV ?? 0));
             } else {

@@ -113,37 +113,11 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("twIIITarget1").textContent = targets.twIII;
         document.getElementById("twIVTarget1").textContent = targets.twIV;
 
-        document.getElementById("twICreate").addEventListener("input", function () {
-            validateInput(this, targets.twI);
-        });
-        document.getElementById("twIICreate").addEventListener("input", function () {
-            validateInput(this, targets.twII);
-        });
-        document.getElementById("twIIICreate").addEventListener("input", function () {
-            validateInput(this, targets.twIII);
-        });
-        document.getElementById("twIVCreate").addEventListener("input", function () {
-            validateInput(this, targets.twIV);
-        });
-
-
         document.getElementById("twITarget").textContent = targets.twI;
         document.getElementById("twIITarget").textContent = targets.twII;
         document.getElementById("twIIITarget").textContent = targets.twIII;
         document.getElementById("twIVTarget").textContent = targets.twIV;
 
-        document.getElementById("twIEdit").addEventListener("input", function () {
-            validateInput(this, targets.twI);
-        });
-        document.getElementById("twIIEdit").addEventListener("input", function () {
-            validateInput(this, targets.twII);
-        });
-        document.getElementById("twIIIEdit").addEventListener("input", function () {
-            validateInput(this, targets.twIII);
-        });
-        document.getElementById("twIVEdit").addEventListener("input", function () {
-            validateInput(this, targets.twIV);
-        });
     }
     addTarget();
 
@@ -188,13 +162,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
             row.innerHTML = `
             <th th scope = "row" class= "px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white" > 1.</th >
-            <td class="px-6 py-4">${item.twI.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</td>
-            <td class="px-6 py-4">${item.twII.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</td>
-            <td class="px-6 py-4">${item.twIII.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</td>
-            <td class="px-6 py-4">${item.twIV.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</td>
-            <td class="px-6 py-4">${item.jumlah.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</td>
-            <td class="px-6 py-4">${item.capaian}</td>
-            <td class="px-6 py-4">${parseFloat(item.presentase).toFixed(2)}%</td>
+            <td class="px-6 py-4">${(item.twI || 0).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</td>
+            <td class="px-6 py-4">${(item.twII || 0).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</td>
+            <td class="px-6 py-4">${(item.twIII || 0).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</td>
+            <td class="px-6 py-4">${(item.twIV || 0).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</td>
+            <td class="px-6 py-4">${(item.jumlah || 0).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</td>
+            <td class="px-6 py-4">${item.capaian || '-'}</td>
+            <td class="px-6 py-4">${(parseFloat(item.presentase) || 0).toFixed(2)}%</td>
             <td class="px-6 py-4">
                 <button data-id="${item.id}"  data-modal-target="crudModal1" data-modal-toggle="crudModal1"  class="px-2 text-xs my-1 w-full  py-3 bg-yellow-400 text-white font-bold text-center hover:bg-yellow-700 rounded">
                     <div class="flex justify-center">
