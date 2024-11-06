@@ -49,6 +49,7 @@ class RencanaAksi extends Model
             $b->realisasiAnggaran()->delete();
             $b->realisasiPenyelesaian()->delete();
             $b->FileAssets()->delete();
+            $b->reject()->delete();
         });
     }
     public function permasalahan()
@@ -72,6 +73,7 @@ class RencanaAksi extends Model
     {
         return $this->hasOne(RealisasiPenyelesaian::class);
     }
+
     public function reject()
     {
         return $this->hasOne(Reject::class);

@@ -4,8 +4,14 @@ namespace App\Http\Controllers;
 
 use Exception;
 use App\Models\RencanaAksi;
+use Illuminate\Support\Str;
 use App\Models\Permasalahan;
 use Illuminate\Http\Request;
+use App\Models\TargetAnggaran;
+use App\Models\RealisasiAnggaran;
+use App\Models\TargetPenyelesaian;
+use App\Models\RealisasiPenyelesaian;
+use Google\Service\CloudDeploy\Target;
 use Illuminate\Validation\ValidationException;
 
 class EvaluasiController extends Controller
@@ -17,16 +23,8 @@ class EvaluasiController extends Controller
             $startTime =  microtime(true);
             // query get data
             // $query = RencanaAksi::query();
-            $data = Permasalahan::whereHas('renaksi.reject', function ($query) {
-                $query->where('status', 'Rejected');
-            })
-            ->with(['renaksi' => function ($query) {
-                $query->whereHas('reject', function ($q) {
-                    $q->where('status', 'Rejected');
-                })->with('reject');
-            }])
-            ->with(['renaksi.targetAnggaran','renaksi.targetPenyelesaian','renaksi.realisasiAnggaran','renaksi.realisasiPenyelesaian','renaksi.reject'])
-
+            $data = Permasalahan::
+            with(['renaksi.targetAnggaran','renaksi.targetPenyelesaian','renaksi.realisasiAnggaran','renaksi.realisasiPenyelesaian','renaksi.reject'])
             ->where('user_id', $user_id)
             ->get();
             // check if data rencana aksi not found
@@ -53,9 +51,11 @@ class EvaluasiController extends Controller
 
     // fungsi update data
     public function updateEvaluasi(Request $request, $user_id){
-        // validasi inputan permasalahan
     
-        $request->validate([
+        // validasi inputan permasalahan
+        
+      
+        $validate = $request->validate([
             'permasalahan' => 'required|array',
             'permasalahan.permasalahan' => 'required|string',
             'permasalahan.sasaran' => 'required|string',
@@ -68,30 +68,37 @@ class EvaluasiController extends Controller
             'rencana_aksi.koordinator' => 'required|string',
             'rencana_aksi.pelaksana' => 'required|string',
 
-            'target_penyelesaian.twI' => 'required',
-            'target_penyelesaian.twII' => 'required',
-            'target_penyelesaian.twIII' => 'required',
-            'target_penyelesaian.twIV' => 'required',
+            'target_penyelesaian.twI' => 'required|integer',
+            'target_penyelesaian.twII' => 'required|integer',
+            'target_penyelesaian.twIII' => 'required|integer',
+            'target_penyelesaian.twIV' => 'required|integer',
 
-            'realisasi_penyelesaian.twI' => 'required',
-            'realisasi_penyelesaian.twII' => 'required',
-            'realisasi_penyelesaian.twIII' => 'required',
-            'realisasi_penyelesaian.twIV' => 'required',
-            'realisasi_penyelesaian.type' => 'required|string',
+            'realisasi_penyelesaian.twI' => 'required|integer',
+            'realisasi_penyelesaian.twII' => 'required|integer',
+            'realisasi_penyelesaian.twIII' => 'required|integer',
+            'realisasi_penyelesaian.twIV' => 'required|integer',
+            'target_penyelesaian.type' => 'required|string',
 
-            'target_anggaran.twI' => 'required',
-            'target_anggaran.twII' => 'required',
-            'target_anggaran.twIII' => 'required',
-            'target_anggaran.twIV' => 'required',
+            'target_anggaran.twI' => 'required|integer',
+            'target_anggaran.twII' => 'required|integer',
+            'target_anggaran.twIII' => 'required|integer',
+            'target_anggaran.twIV' => 'required|integer',
 
-            'realisasi_anggaran.twI' => 'required',
-            'realisasi_anggaran.twII' => 'required',
-            'realisasi_anggaran.twIII' => 'required',
-            'realisasi_anggaran.twIV' => 'required',
+            'realisasi_anggaran.twI' => 'required|integer',
+            'realisasi_anggaran.twII' => 'required|integer',
+            'realisasi_anggaran.twIII' => 'required|integer',
+            'realisasi_anggaran.twIV' => 'required|integer',
             
 
-            'reject.status' => 'required|string',
+    
         ]);
+
+        if ($validate === false) {
+            return response()->json([
+                'success' => false,
+                'message' => 'validation failed'+ $validate,
+            ]);
+        }
 
         try {
             // update permasalahan
@@ -105,7 +112,7 @@ class EvaluasiController extends Controller
             $data->update($request->permasalahan);
             
             // update rencana aksi
-            $dataRencanaAksi = RencanaAksi::where('user_id', $user_id)->where('permasalahan_id', $request->rencana_aksi['permasalahan_id'])->first();
+            $dataRencanaAksi = RencanaAksi::where('user_id', $user_id)->where('id', $request->rencana_aksi['renaksi_id'])->first();
             if ($dataRencanaAksi == null) {
                 return response()->json([
                     'status' => 'failed',
@@ -114,45 +121,184 @@ class EvaluasiController extends Controller
             }
             $dataRencanaAksi->update($request->rencana_aksi);
 
-            // update target penyelesaian
+            $maxTotal = max($request->target_penyelesaian["twI"], $request->target_penyelesaian["twII"], $request->target_penyelesaian["twIII"], $request->target_penyelesaian["twIV"]);
+            $sumTotal = $request->target_penyelesaian["twI"] + $request->target_penyelesaian["twII"] + $request->target_penyelesaian["twIII"] + $request->target_penyelesaian["twIV"];
+
+            // save target penyelesaian
             $dataTargetPenyelesaian = $dataRencanaAksi->targetPenyelesaian()->first();
-            if ($dataTargetPenyelesaian == null) {
-                return response()->json([
-                    'status' => 'failed',
-                    'message' => 'data permasalahan not found',
-                ], 404);
-            }
-            $dataTargetPenyelesaian->update($request->target_penyelesaian);
 
-            // update realisasi penyelesaian
+            // check if target penyelesaian exists then update
+            if ($dataTargetPenyelesaian) {
+                // check if type is partial
+                if ($dataTargetPenyelesaian->type == 'Parsial') {
+                    $dataTargetPenyelesaian->update([
+                        'twI' => $request->target_penyelesaian['twI'],
+                        'twII' => $request->target_penyelesaian['twII'],
+                        'twIII' => $request->target_penyelesaian['twIII'],
+                        'twIV' => $request->target_penyelesaian['twIV'],
+                        'subjek' => $request->target_penyelesaian['type'],
+                        'jumlah' => $maxTotal,
+                    ]);
+                }else if ($$dataTargetPenyelesaian->type == 'Kumulatif') {
+                    $dataTargetPenyelesaian->update([
+                        'twI' => $request->target_penyelesaian['twI'],
+                        'twII' => $request->target_penyelesaian['twII'],
+                        'twIII' => $request->target_penyelesaian['twIII'],
+                        'twIV' => $request->target_penyelesaian['twIV'],
+                        'subjek' => $request->target_penyelesaian['type'],
+                        'jumlah' => $sumTotal,
+                    ]);
+                }
+            // create new target penyelesaian
+            }else{
+                // check if type is partial
+                // if($request->target_penyelesaian['type'] == 'Partial') {
+                //     TargetPenyelesaian::create([
+                //         'id' => Str::uuid(),
+                //         'rencana_aksi_id' => $dataRencanaAksi->id,
+                //         'user_id' => $user_id,
+                //         'twI' => $request->target_penyelesaian['twI'],
+                //         'twII' => $request->target_penyelesaian['twII'],
+                //         'twIII' => $request->target_penyelesaian['twIII'],
+                //         'twIV' => $request->target_penyelesaian['twIV'],
+                //         'type' => $request->target_penyelesaian['type'],
+                //         'jumlah' => $maxTotal,
+                //     ]);
+                // }else if ($request->target_penyelesaian['type'] == 'Kumulatif') {
+                //     TargetPenyelesaian::create([
+                //         'id' => Str::uuid(),
+                //         'rencana_aksi_id' => $dataRencanaAksi->id,
+                //         'user_id' => $user_id,
+                //         'twI' => $request->target_penyelesaian['twI'],
+                //         'twII' => $request->target_penyelesaian['twII'],
+                //         'twIII' => $request->target_penyelesaian['twIII'],
+                //         'twIV' => $request->target_penyelesaian['twIV'],
+                //         'type' => $request->target_penyelesaian['type'],
+                //         'jumlah' => $sumTotal,
+                //     ]);
+                // }
+
+                return response()->json(['messesage' => 'maaf banyak data yang kosong, mohon pengisian lewat fitur Reformasi Birokrasi !!!']);
+
+                
+            }
+
+
+            $maxTotalReal = max($request->realisasi_penyelesaian["twI"], $request->realisasi_penyelesaian["twII"], $request->realisasi_penyelesaian["twIII"], $request->realisasi_penyelesaian["twIV"]);
+            $sumTotalReal = $request->realisasi_penyelesaian["twI"] + $request->realisasi_penyelesaian["twII"] + $request->realisasi_penyelesaian["twIII"] + $request->realisasi_penyelesaian["twIV"];
+
+            // save realisasi penyelesaian
             $dataRealisasiPenyelesaian = $dataRencanaAksi->realisasiPenyelesaian()->first();
-            if ($dataRealisasiPenyelesaian == null) {
-                return response()->json([
-                    'status' => 'failed',
-                    'message' => 'data permasalahan not found',
-                ], 404);
+            // check if realisasi penyelesaian exists then update
+            if ($dataRealisasiPenyelesaian) {
+                if ($dataTargetPenyelesaian->type == 'Parsial') {
+                    $dataRealisasiPenyelesaian->update([
+                        'twI' => $request->realisasi_penyelesaian['twI'],
+                        'twII' => $request->realisasi_penyelesaian['twII'],
+                        'twIII' => $request->realisasi_penyelesaian['twIII'],
+                        'twIV' => $request->realisasi_penyelesaian['twIV'],
+                        'jumlah' => $maxTotalReal,
+                        'presentase' => $sumTotalReal / $sumTotal * 100,
+                    ]);
+                }else if ($dataTargetPenyelesaian->type == 'Kumulatif') {
+                    $dataRealisasiPenyelesaian->update([
+                        'twI' => $request->realisasi_penyelesaian['twI'],
+                        'twII' => $request->realisasi_penyelesaian['twII'],
+                        'twIII' => $request->realisasi_penyelesaian['twIII'],
+                        'twIV' => $request->realisasi_penyelesaian['twIV'],
+                        'jumlah' => $sumTotalReal,
+                        'presentase' => $sumTotalReal / $sumTotal * 100,
+                    ]);
+                }
+            }else{
+                if ($dataTargetPenyelesaian->type == 'Parsial') {
+                    RealisasiPenyelesaian::create([
+                        'id' => Str::uuid(),
+                        'rencana_aksi_id' => $dataRencanaAksi->id,
+                        'user_id' => $user_id,
+                        'twI' => $request->realisasi_penyelesaian['twI'],
+                        'twII' => $request->realisasi_penyelesaian['twII'],
+                        'twIII' => $request->realisasi_penyelesaian['twIII'],
+                        'twIV' => $request->realisasi_penyelesaian['twIV'],
+                        'jumlah' => $maxTotalReal,
+                        'presentase' => $sumTotalReal / $sumTotal * 100,
+                    ]);
+                }else if ($dataTargetPenyelesaian->type == 'Kumulatif') {
+                    RealisasiPenyelesaian::create([
+                        'id' => Str::uuid(),
+                        'rencana_aksi_id' => $dataRencanaAksi->id,
+                        'user_id' => $user_id,
+                        'twI' => $request->realisasi_penyelesaian['twI'],
+                        'twII' => $request->realisasi_penyelesaian['twII'],
+                        'twIII' => $request->realisasi_penyelesaian['twIII'],
+                        'twIV' => $request->realisasi_penyelesaian['twIV'],
+                        'jumlah' => $sumTotalReal,
+                        'presentase' => $sumTotalReal / $sumTotal * 100,
+                    ]);
+                }
             }
-            $dataRealisasiPenyelesaian->update($request->realisasi_penyelesaian);
 
-            // update target anggaran
+
+
+            $sumtotalTargetAnggaran = $validate['target_anggaran']['twI'] + $validate['target_anggaran']['twII'] + $validate['target_anggaran']['twIII'] + $validate['target_anggaran']['twIV'];
+            
+            // // save target anggaran
             $dataTargetAnggaran = $dataRencanaAksi->targetAnggaran()->first();
-            if ($dataTargetAnggaran == null) {
-                return response()->json([
-                    'status' => 'failed',
-                    'message' => 'data permasalahan not found',
-                ], 404);
+            // // check if target anggaran exists
+            if ($dataTargetAnggaran) {
+                // update target anggaran
+                    $dataTargetAnggaran->update([
+                        'twI' => $validate['target_anggaran']['twI'],
+                        'twII' => $validate['target_anggaran']['twII'],
+                        'twIII' => $validate['target_anggaran']['twIII'],
+                        'twIV' => $validate['target_anggaran']['twIV'],
+                        'jumlah' => $sumtotalTargetAnggaran,
+                    ]);
+                
+            }else{
+                //check if type is partial
+                    TargetAnggaran::create([
+                        'id' => Str::uuid(),
+                        'rencana_aksi_id' => $dataRencanaAksi->id,
+                        'user_id' => $user_id,
+                        'twI' => $validate['target_anggaran']['twI'],
+                        'twII' => $validate['target_anggaran']['twII'],
+                        'twIII' => $validate['target_anggaran']['twIII'],
+                        'twIV' => $validate['target_anggaran']['twIV'],
+                        'jumlah' => $sumtotalTargetAnggaran,
+                    ]);
             }
-            $dataTargetAnggaran->update($request->target_anggaran);
+            
 
-            // update realisasi anggaran
+            $sumtotalRealisasiAnggaran = $validate['realisasi_anggaran']['twI'] + $validate['realisasi_anggaran']['twII'] + $validate['realisasi_anggaran']['twIII'] + $validate['realisasi_anggaran']['twIV'];
+
+            // // save realisasi anggaran
             $dataRealisasiAnggaran = $dataRencanaAksi->realisasiAnggaran()->first();
-            if ($dataRealisasiAnggaran == null) {
-                return response()->json([
-                    'status' => 'failed',
-                    'message' => 'data permasalahan not found',
-                ], 404);
+            // // check if realisasi anggaran exists
+            if ($dataRealisasiAnggaran) {
+                    $dataRealisasiAnggaran->update([
+                        'twI' => $validate['realisasi_anggaran']['twI'],
+                        'twII' => $validate['realisasi_anggaran']['twII'],
+                        'twIII' => $validate['realisasi_anggaran']['twIII'],
+                        'twIV' => $validate['realisasi_anggaran']['twIV'],
+                        'jumlah' => $sumtotalRealisasiAnggaran,
+                        'presentase' => $sumtotalRealisasiAnggaran / $sumtotalTargetAnggaran * 100,
+
+                    ]);
+            }else{
+                    RealisasiAnggaran::create([
+                        'id' => Str::uuid(),
+                        'rencana_aksi_id' => $dataRencanaAksi->id,
+                        'user_id' => $user_id,
+                        'twI' => $validate['realisasi_anggaran']['twI'],
+                        'twII' => $validate['realisasi_anggaran']['twII'],
+                        'twIII' => $validate['realisasi_anggaran']['twIII'],
+                        'twIV' => $validate['realisasi_anggaran']['twIV'],
+                        'jumlah' => $sumtotalRealisasiAnggaran,
+                        'presentase' => $sumtotalRealisasiAnggaran / $sumtotalTargetAnggaran * 100,
+                    ]);
             }
-            $dataRealisasiAnggaran->update($request->realisasi_anggaran);
+
 
             // update reject
             $dataReject = $dataRencanaAksi->reject()->first();
@@ -162,12 +308,14 @@ class EvaluasiController extends Controller
                     'message' => 'data reject not found',
                 ], 404);
             }
-            $dataReject->update($request->reject);
+            $dataReject->update([
+                'status' =>  $request->reject['status']
+            ]);
 
             return response()->json([
                     'status' => 'success',
                     'messesage' => 'data berhasil diperbarui!',
-                    'data' => ["statusReject" => $dataReject,"permasalahan" => $data, "rencana_aksi" => $dataRencanaAksi, "target_penyelesaian" => $dataTargetPenyelesaian, "target_anggaran" => $dataTargetAnggaran]
+                    'data' => ["statusReject" => $dataReject,"permasalahan" => $data, "rencana_aksi" => $dataRencanaAksi, "target_penyelesaian" => $dataTargetPenyelesaian]
                     ], 200);
         } catch (ValidationException $e) {
             return back()->with('error', 'ada kesalahan saat proses update');

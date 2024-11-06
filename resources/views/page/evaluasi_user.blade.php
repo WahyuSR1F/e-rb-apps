@@ -38,19 +38,22 @@
                                     <th scope="col" colspan="2"
                                         class="py-2 px-6 bg-gray-100 text-center text-gray-600 font-semibold border">OUTPUT
                                     </th>
-                                    <th scope="col" colspan="8"
+                                    <th scope="col" colspan="10"
                                         class="py-2 px-6 bg-gray-100 text-center text-gray-600 font-semibold border">
                                         PENYELESAIAN</th>
                                     <th scope="col" rowspan="3"
+                                        class="py-2 px-6 bg-gray-100 text-center text-gray-600 font-semibold border">CAPAIAN
+                                        %</th>
+                                    <th scope="col" rowspan="3"
                                         class="py-2 px-6 bg-gray-100 text-center text-gray-600 font-semibold border">JENIS
-                                        KEGIATAN
-                                        AKSI</th>
-                                    <th scope="col" colspan="8"
+                                        KEGIATAN AKSI \ N (TERKAIT ATAU TIDAK TERKAIT LANGSUNG DENGAN MASYARAKAT STAKEHOLDER
+                                        UTAMA)</th>
+                                    <th scope="col" colspan="10"
                                         class="py-2 px-6 bg-gray-100 text-center text-gray-600 font-semibold border">
                                         ANGGARAN</th>
                                     <th scope="col" rowspan="3"
-                                        class="py-2 px-6 bg-gray-100 text-center text-gray-600 font-semibold border">JUMLAH
-                                        ANGGARAN</th>
+                                        class="py-2 px-6 bg-gray-100 text-center text-gray-600 font-semibold border">CAPAIAN
+                                        %</th>
                                     <th scope="col" colspan="2"
                                         class="py-2 px-6 bg-gray-100 text-center text-gray-600 font-semibold border">UNIT /
                                         SATUAN
@@ -72,16 +75,16 @@
                                     <td scope="col" rowspan="2"
                                         class="px-6 py-2 bg-gray-100 text-center text-gray-600 border font-semibold">SATUAN
                                     </td>
-                                    <th scope="col" colspan="4"
+                                    <th scope="col" colspan="5"
                                         class="py-2 px-6 bg-gray-100 text-center text-gray-600 font-semibold border">
                                         TARGET</th>
-                                    <th scope="col" colspan="4"
+                                    <th scope="col" colspan="5"
                                         class="py-2 px-6 bg-gray-100 text-center text-gray-600 font-semibold border">
                                         REALISASI</th>
-                                    <th scope="col" colspan="4"
+                                    <th scope="col" colspan="5"
                                         class="py-2 px-6 bg-gray-100 text-center text-gray-600 font-semibold border">
                                         TARGET</th>
-                                    <th scope="col" colspan="4"
+                                    <th scope="col" colspan="5"
                                         class="py-2 px-6 bg-gray-100 text-center text-gray-600 font-semibold border">
                                         REALISASI</th>
                                     <td scope="col" rowspan="2"
@@ -105,16 +108,7 @@
                                         class="px-6 py-2 bg-gray-100 text-center text-gray-600 border font-semibold">TW IV
                                     </td>
                                     <td scope="col"
-                                        class="px-6 py-2 bg-gray-100 text-center text-gray-600 border font-semibold">TW I
-                                    </td>
-                                    <td scope="col"
-                                        class="px-6 py-2 bg-gray-100 text-center text-gray-600 border font-semibold">TW II
-                                    </td>
-                                    <td scope="col"
-                                        class="px-6 py-2 bg-gray-100 text-center text-gray-600 border font-semibold">TW III
-                                    </td>
-                                    <td scope="col"
-                                        class="px-6 py-2 bg-gray-100 text-center text-gray-600 border font-semibold">TW IV
+                                        class="px-6 py-2 bg-gray-100 text-center text-gray-600 border font-semibold">TOTAL
                                     </td>
                                     <td scope="col"
                                         class="px-6 py-2 bg-gray-100 text-center text-gray-600 border font-semibold">TW I
@@ -129,6 +123,9 @@
                                         class="px-6 py-2 bg-gray-100 text-center text-gray-600 border font-semibold">TW IV
                                     </td>
                                     <td scope="col"
+                                        class="px-6 py-2 bg-gray-100 text-center text-gray-600 border font-semibold">TOTAL
+                                    </td>
+                                    <td scope="col"
                                         class="px-6 py-2 bg-gray-100 text-center text-gray-600 border font-semibold">TW I
                                     </td>
                                     <td scope="col"
@@ -139,6 +136,24 @@
                                     </td>
                                     <td scope="col"
                                         class="px-6 py-2 bg-gray-100 text-center text-gray-600 border font-semibold">TW IV
+                                    </td>
+                                    <td scope="col"
+                                        class="px-6 py-2 bg-gray-100 text-center text-gray-600 border font-semibold">TOTAL
+                                    </td>
+                                    <td scope="col"
+                                        class="px-6 py-2 bg-gray-100 text-center text-gray-600 border font-semibold">TW I
+                                    </td>
+                                    <td scope="col"
+                                        class="px-6 py-2 bg-gray-100 text-center text-gray-600 border font-semibold">TW II
+                                    </td>
+                                    <td scope="col"
+                                        class="px-6 py-2 bg-gray-100 text-center text-gray-600 border font-semibold">TW III
+                                    </td>
+                                    <td scope="col"
+                                        class="px-6 py-2 bg-gray-100 text-center text-gray-600 border font-semibold">TW IV
+                                    </td>
+                                    <td scope="col"
+                                        class="px-6 py-2 bg-gray-100 text-center text-gray-600 border font-semibold">TOTAL
                                     </td>
                                 </tr>
                             </thead>

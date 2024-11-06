@@ -19,14 +19,14 @@ class ApiAuthentication
      */
     public function handle(Request $request, Closure $next): Response
     {
-
+       
     
         if (!$request || !$request->token) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
         
-        
         $user =  User::where('token', decrypt($request->token))->first();
+        
     
         if (!$user) {
             return response()->json(['error' => 'Unauthorized'], 401);

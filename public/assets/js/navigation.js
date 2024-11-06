@@ -1,7 +1,7 @@
 
 if (typeof baseUrl === 'undefined') {
     // var baseUrl = 'http://192.168.1.5:8010/api';
-    var baseUrl = "http://127.0.0.1:8010/api";
+    var baseUrl = window.location.origin + '/api'
 }
 let auth;
 

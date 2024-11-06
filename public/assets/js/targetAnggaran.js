@@ -1,6 +1,6 @@
 if (typeof baseUrl === 'undefined') {
     // var baseUrl = 'http://192.168.1.5:8010/api';
-    var baseUrl = "http://127.0.0.1:8010/api";
+    var baseUrl = window.location.origin + '/api';
 }
 
 const idRenaksi = localStorage.getItem("id_rencana_aksi");
@@ -140,6 +140,39 @@ document.addEventListener("DOMContentLoaded", () => {
 
             tableBody.appendChild(row);
         });
+
+        document.addEventListener('click', (event) => {
+            const target = event.target.closest('[data-modal-target]');
+            const close = event.target.closest('[data-modal-toggle]');
+            console.log(close);
+            
+            if (target) {
+                
+                const modalId = target.getAttribute('data-modal-target');
+                const modal = document.getElementById(modalId);
+                console.log(modal);
+                if (modal) {
+                    const modalInstance = new Modal(modal);
+                     modalInstance.toggle();
+                    
+                    
+                }
+            } else if (close) {
+                const modalId = close.getAttribute('data-modal-toggle');
+                const modal = document.getElementById(modalId);
+                console.log(modal);
+                if (modal) {
+                    const modalInstance = new Modal(modal);
+                     modalInstance.hide();
+                    
+                    
+                }else{
+                    
+                }
+            }
+            
+        });
+
         tableBody.addEventListener('click', (event) => {
             const target = event.target.closest('[data-modal-toggle]');
             if (target) {
@@ -226,7 +259,7 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById("twIIEdit").value = data.twII;
             document.getElementById("twIIIEdit").value = data.twIII;
             document.getElementById("twIVEdit").value = data.twIV;
-            document.getElementById("jumlahEdit").value = data.jumlah;
+          
 
 
             document.getElementById("crudModal1").classList.remove("hidden");

@@ -17,12 +17,11 @@ return new class extends Migration
             $table->foreign('rencana_aksi_id')->references('id')->on('rencana_aksis');
             $table->foreignUuid('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
-            $table->integer('twI')->nullable()->comment('target anggran');
-            $table->integer('twII')->nullable()->comment('target anggran');
-            $table->integer('twIII')->nullable()->comment('target anggran');
-            $table->integer('twIV')->nullable()->comment('target anggran');
-            $table->integer('jumlah')->nullable();
-
+            $table->bigInteger('twI')->nullable()->comment('target anggran');
+            $table->bigInteger('twII')->nullable()->comment('target anggran');
+            $table->bigInteger('twIII')->nullable()->comment('target anggran');
+            $table->bigInteger('twIV')->nullable()->comment('target anggran');
+            $table->bigInteger('jumlah')->nullable();
             $table->timestamps();
         });
     }

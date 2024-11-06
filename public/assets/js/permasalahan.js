@@ -1,6 +1,6 @@
 if (typeof baseUrl === 'undefined') {
     // var baseUrl = 'http://192.168.1.5:8010/api';
-    var baseUrl = "http://127.0.0.1:8010/api";
+    var baseUrl =window.location.origin + '/api';
 }
 
 const idTema = localStorage.getItem("temaId");
@@ -34,16 +34,94 @@ window.onload = function () {
 
 // mengambil data
 function initializeModals() {
-    const modals = document.querySelectorAll('[data-modal-toggle]');
-    modals.forEach(modalToggle => {
-        const modalId = modalToggle.getAttribute('data-modal-target');
+    // Initialize all modals first
+    const modals = document.querySelectorAll('[data-modal-target], [data-modal-toggle]');
+    modals.forEach(modalTrigger => {
+        const modalId = modalTrigger.getAttribute('data-modal-target') || modalTrigger.getAttribute('data-modal-toggle');
         const modal = document.getElementById(modalId);
-        console.log(modal);
         if (modal) {
-            new Modal(modal);
+            // Initialize Modal instance
+            new Modal(modal, {
+                onHide: () => {
+                    modal.classList.add('hidden');
+                    modal.setAttribute('aria-hidden', 'true');
+                },
+                onShow: () => {
+                    modal.classList.remove('hidden');
+                    modal.setAttribute('aria-hidden', 'false');
+                }
+            });
         }
     });
+
+    // Add click event listener for opening and closing modals
+    document.addEventListener('click', (event) => {
+        const target = event.target;
+        
+        // Handle modal triggers
+        const modalTrigger = target.closest('[data-modal-toggle]');
+        if (modalTrigger) {
+            const modalId = modalTrigger.getAttribute('data-modal-toggle');
+            const modal = document.getElementById(modalId);
+            if (modal) {
+              
+                const modalInstance = new Modal(modal);
+                // If clicking close button (check if it's inside the modal)
+                if (modal.contains(modalTrigger) || modalTrigger.closest('[data-modal-close]')) {
+                    modalInstance.hide();
+                } else {
+                    modalInstance.toggle();
+                }
+            }
+        }
+
+        
+        // Handle clicking outside modal
+        const openModal = document.querySelector('[role="dialog"]:not(.hidden)');
+        if (openModal && !openModal.contains(target) && target.closest('[role="dialog"]') === null) {
+            const modalInstance = new Modal(openModal);
+            modalInstance.hide();
+        }
+    });
+
+    // Add ESC key handler
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+            const openModal = document.querySelector('[role="dialog"]:not(.hidden)');
+            if (openModal) {
+                const modalInstance = new Modal(openModal);
+                modalInstance.hide();
+            }
+        }
+    });
+
+    // Add specific handlers for close buttons
+    const closeButtons = document.querySelectorAll('[data-modal-close]');
+    closeButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const modal = button.closest('[role="dialog"]');
+            if (modal) {
+                const modalInstance = new Modal(modal);
+                modalInstance.hide();
+            }
+        });
+    });
 }
+
+function handleExport() {
+    // Get the modal
+    const modal = document.getElementById("readProductModal");
+    
+    // Show the modal (assuming you're using a library like Flowbite)
+    const modalInstance = new Modal(modal);
+    modalInstance.show();
+    console.log(idTema);
+
+    // Fill the hidden input with the current tema ID
+    const idTemaInput = document.getElementById('id_Tema');
+    idTemaInput.value = idTema; // idTema should be already defined in your existing code
+}
+
 
 document.addEventListener("DOMContentLoaded", () => {
     auth = document.getElementById('auth_token').value; 
@@ -150,6 +228,45 @@ document.addEventListener("DOMContentLoaded", () => {
 
             tableBody.appendChild(row);
         });
+      
+        document.addEventListener('click', (event) => {
+            const target = event.target.closest('[data-modal-target]');
+            const close = event.target.closest('[data-modal-toggle]');
+            console.log(close);
+            if (target) {
+                const modalId = target.getAttribute('data-modal-target');
+                const modal = document.getElementById(modalId);
+                if (modal) {
+                    const modalInstance = new Modal(modal);
+                     modalInstance.toggle();
+                    
+                    
+                }
+            } else if (close) {
+                const modalId = close.getAttribute('data-modal-toggle');
+                const modal = document.getElementById(modalId);
+                if (modal) {
+                    const modalInstance = new Modal(modal);
+                     modalInstance.hide();
+                    
+                    
+                }
+            }
+            
+        });
+
+        // document.addEventListener('click', (event) => {
+        //     const target = event.target.closest('[data-modal-toggle]');
+        //     if (target) {
+        //         const modalId = target.getAttribute('data-modal-toggle');
+        //         const modal = document.getElementById(modalId);
+        //         if (modal) {
+        //             const modalInstance = new Modal(modal);
+        //              modalInstance.hide(); 
+        //         }
+        //     }
+        // });
+
         document.querySelectorAll(".rencana-aksi-button").forEach((button) => {
             button.addEventListener("click", (e) => {
                 e.preventDefault();
@@ -158,20 +275,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 window.location.href = "/rencana-aksi";
             });
         });
-        tableBody.addEventListener('click', (event) => {
-            const target = event.target.closest('[data-modal-toggle]');
-            if (target) {
-              const modalId = target.getAttribute('data-modal-target');
-              const modal = document.getElementById(modalId);
-              if (modal) {
-                const modalInstance = new Modal(modal);
-                modalInstance.toggle();
-              }
-            }
-          });
+      
     };
-    initializeModals();
     
+    const exportButton = document.getElementById("readProductButton");
+    exportButton.addEventListener("click", handleExport);
 
     const updatePagination = (data) => {
         const pagination = document.getElementById("pagination");
@@ -282,6 +390,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
+   
     fetchData();
 
     searchInput.addEventListener("input", () => {

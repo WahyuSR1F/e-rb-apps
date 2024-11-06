@@ -1,102 +1,67 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tahun dan Periode</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <title>Reformasi Birokrasi Indonesia</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .bg-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+    </style>
 </head>
-
-<body class="bg-gray-100 h-screen flex items-center justify-center">
-
-    <!-- Card Container -->
-    <div class="bg-white shadow-lg rounded-lg p-8 w-full max-w-3xl">
-        <h2 class="text-2xl font-semibold text-gray-700 mb-6 text-center">Form Pilih Tahun & Periode</h2>
-
-        <form class="space-y-4">
-            <div class="flex flex-wrap -mx-4">
-                <!-- Select Tahun -->
-                <div class="w-full sm:w-1/3 px-4">
-                    <label for="selectTahun" class="block text-sm font-medium text-gray-700 mb-2">Pilih Tahun</label>
-                    <select id="selectTahun"
-                        class="block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
-                        <option value="">--Pilih Tahun--</option>
-                        <script>
-                            const currentYear = new Date().getFullYear();
-                            for (let year = currentYear; year >= 2000; year--) {
-                                document.write(`<option value="${year}">${year}</option>`);
-                            }
-                        </script>
-                    </select>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center bg-pattern">
+    <div class="container mx-auto px-4">
+        <div class="max-w-6xl mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden">
+            <div class="md:flex">
+                <div class="md:flex-1 p-8 bg-[#0f766e] text-white flex flex-col justify-center items-start">
+                    <h2 class="text-3xl font-bold mb-4">Reformasi Birokrasi</h2>
+                    <p class="text-lg mb-6">Menuju pemerintahan yang efisien, transparan, dan berorientasi pada pelayanan publik.</p>
+                    <button id="learnMore" class="bg-white text-[#0f766e] font-semibold py-2 px-6 rounded-full hover:bg-opacity-90 transition duration-300">
+                        Pelajari Lebih Lanjut
+                    </button>
                 </div>
-
-                <!-- Input Periode Awal -->
-                <div class="w-full sm:w-1/3 px-4">
-                    <label for="periodeAwal" class="block text-sm font-medium text-gray-700 mb-2">Periode Awal</label>
-                    <input type="text" id="periodeAwal" placeholder="Pilih tanggal awal"
-                        class="block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
-                </div>
-
-                <!-- Input Periode Akhir -->
-                <div class="w-full sm:w-1/3 px-4">
-                    <label for="periodeAkhir" class="block text-sm font-medium text-gray-700 mb-2">Periode Akhir</label>
-                    <input type="text" id="periodeAkhir" placeholder="Pilih tanggal akhir"
-                        class="block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                <div class="md:flex-1 p-8">
+                    <div class="text-right mb-8">
+                        <a href="{{ route('login') }}">
+                            <button id="loginBtn" class="bg-[#0f766e] hover:bg-opacity-90 text-white font-bold py-2 px-6 rounded-full transition duration-300">
+                                Login
+                            </button>
+                        </a>
+                        
+                    </div>
+                    <h1 class="text-4xl font-bold text-gray-800 mb-4">Transformasi Digital Birokrasi Indonesia</h1>
+                    <p class="text-lg text-gray-600 mb-6">Kami berkomitmen untuk menciptakan sistem pemerintahan yang modern, efektif, dan responsif terhadap kebutuhan masyarakat.</p>
+                    <div class="flex space-x-4 mb-8">
+                        <div class="flex-1 bg-gray-100 p-4 rounded-lg">
+                            <h3 class="font-semibold text-lg mb-2">Efisiensi</h3>
+                            <p class="text-gray-600">Mengoptimalkan proses kerja untuk pelayanan yang lebih cepat</p>
+                        </div>
+                        <div class="flex-1 bg-gray-100 p-4 rounded-lg">
+                            <h3 class="font-semibold text-lg mb-2">Transparansi</h3>
+                            <p class="text-gray-600">Menjamin akses informasi dan akuntabilitas publik</p>
+                        </div>
+                        <div class="flex-1 bg-gray-100 p-4 rounded-lg">
+                            <h3 class="font-semibold text-lg mb-2">Inovasi</h3>
+                            <p class="text-gray-600">Menerapkan solusi teknologi untuk peningkatan layanan</p>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-            <!-- Clear Button and Submit Button -->
-            <div class="flex justify-start space-x-4 mt-4">
-                <button type="button" id="clearPeriode"
-                    class="bg-red-500 text-white p-3 rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500">Clear
-                    Periode</button>
-                <button type="submit"
-                    class="bg-indigo-600 text-white p-3 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">Submit</button>
-            </div>
-        </form>
+        </div>
     </div>
-
     <script>
-        const periodeAwal = document.getElementById('periodeAwal');
-        const periodeAkhir = document.getElementById('periodeAkhir');
-        const selectTahun = document.getElementById('selectTahun');
-        const clearPeriodeButton = document.getElementById('clearPeriode');
-
-        // Inisialisasi flatpickr untuk periode awal dan akhir
-        flatpickr(periodeAwal, {});
-        flatpickr(periodeAkhir, {});
-
-        selectTahun.addEventListener('change', function() {
-            const selectedYear = selectTahun.value;
-
-            if (selectedYear) {
-                flatpickr(periodeAwal, {
-                    dateFormat: 'Y-m-d',
-                    minDate: `${selectedYear}-01-01`,
-                    maxDate: `${selectedYear}-12-31`
-                });
-
-                flatpickr(periodeAkhir, {
-                    dateFormat: 'Y-m-d',
-                    minDate: `${selectedYear}-01-01`,
-                    maxDate: `${selectedYear}-12-31`
-                });
-            } else {
-                flatpickr(periodeAwal, {});
-                flatpickr(periodeAkhir, {});
-            }
-        });
-
-        // Clear the periode input fields
-        clearPeriodeButton.addEventListener('click', function() {
-            periodeAwal.value = ''; // Mengosongkan input Periode Awal
-            periodeAkhir.value = ''; // Mengosongkan input Periode Akhir
+        document.addEventListener('DOMContentLoaded', (event) => {
+            gsap.from(".container > div", {duration: 1, y: 50, opacity: 0, ease: "power3.out"});
+            gsap.from("#loginBtn", {duration: 0.5, y: -20, opacity: 0, ease: "back.out(1.7)", delay: 0.5});
+            gsap.from(".bg-gray-100", {duration: 0.5, scale: 0.9, opacity: 0, ease: "power2.out", stagger: 0.2, delay: 0.7});
         });
     </script>
-
 </body>
-
 </html>

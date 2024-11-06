@@ -264,7 +264,9 @@ class ProcessController extends Controller
                 $query->where('rencana_aksi', 'like', "%{$search}%")->orWhere('indikator', 'like', "%{$search}%")->orWhere('satuan', 'like', '%{$search}%');
             }
 
-            $data =  $query->where('permasalahan_id', $request->id)->paginate($perPage);
+            $data =  $query->where('permasalahan_id', $request->id)->whereDoesntHave('reject', function($query) {
+                $query->where('status', 'Approved');
+            })->paginate($perPage);
             $data = (new HelpersController())->ChangeFormatArray($data);
 
 
@@ -425,9 +427,13 @@ class ProcessController extends Controller
             return response()->json(['messesage' => $e->getMessage()]);
         }
     }
-    public function exportExcel()
+    public function exportExcel(Request $request)
     {
-        return Excel::download(new RBExport, Str::uuid() . '_user.xlsx');
+        
+        $idTema =  $request->id;
+        $year = $request->year;
+
+        return Excel::download(new RBExport($idTema, $year), Str::uuid() . '_user.xlsx');
     }
 
     protected function GDPutFile($folder, $fileName, $request): void

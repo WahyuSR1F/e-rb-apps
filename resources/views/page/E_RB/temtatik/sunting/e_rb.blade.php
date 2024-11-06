@@ -34,8 +34,8 @@
                     <div class="lg:flex lg:justify-start">
                         <p class="font-bold text-md mt-1">Export : </p>
                         <div class="mx-3">
-                           <button
-                           id="readProductButton" data-modal-target="readProductModal" data-modal-toggle="readProductModal"   class="p-1 bg-green-500 hover:bg-green-700 text-md font-bold text-white rounded-lg px-2"><span><i
+                            <button
+                            id="readProductButton" data-modal-target="readProductModal" data-modal-toggle="readProductModal"  class="p-1 bg-green-500 hover:bg-green-700 text-md font-bold text-white rounded-lg px-2"><span><i
                                             class="fa-solid fa-file-csv text-md text-white mx-1"></i></span>Excel</button>
                             <button
                                 class="p-1 bg-gray-400 hover:bg-gray-700 text-md font-bold text-white rounded-lg px-2"><span><i
@@ -123,7 +123,7 @@
             <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
                 <button type="button"
                     class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                    data-modal-hide="popup-modal">
+                    data-modal-toggle="popup-modal2">
                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                         viewBox="0 0 14 14">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -142,11 +142,11 @@
                     <form action="{{ route('delete-permasalahan') }}" method="post">
                         @csrf
                         <input type="hidden" id="id-delete" name="id">
-                        <button data-modal-hide="popup-modal2" type="submit"
+                        <button  type="submit"
                             class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
                             Yes, I'm sure
                         </button>
-                        <button data-modal-hide="popup-modal2" type="button"
+                        <button data-modal-toggle="popup-modal2" type="button"
                             class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">No,
                             cancel</button>
                     </form>
@@ -267,7 +267,12 @@
                     <dl>
                         <dt class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Pilih Tahun</dt>
                         <div class="w-full sm:w-1/3">
-                            <select id="selectTahun"
+                            <form action="{{ route('export-excel') }}" method="post">
+                                @csrf
+
+                                <input type="hidden" id="id_Tema" name="id">
+
+                                <select id="selectTahun" name="year"
                                 class="block w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
                                 <option value="">--Pilih Tahun--</option>
                                 <script>
@@ -280,14 +285,17 @@
                                     }
                                 </script>
                             </select>
+                          
+                           
                         </div>
                     </dl>
                     <div class="flex justify-end items-center">             
-                        <button type="button" class="inline-flex items-center text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-900">
+                        <button type="submit" class="inline-flex items-center text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                             <svg aria-hidden="true" class="w-5 h-5 mr-1.5 -ml-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
                             Export
                         </button>
                     </div>
+                </form>
             </div>
         </div>
     </div>

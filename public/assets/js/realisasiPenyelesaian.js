@@ -1,6 +1,6 @@
 if (typeof baseUrl === 'undefined') {
     // var baseUrl = 'http://192.168.1.5:8010/api';
-    var baseUrl = "http://127.0.0.1:8010/api";
+    var baseUrl = window.location.origin + '/api';
 }
 
 const idRenaksi = localStorage.getItem("id_rencana_aksi");
@@ -218,6 +218,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
             tableBody.appendChild(row);
         });
+
+        document.addEventListener('click', (event) => {
+            const target = event.target.closest('[data-modal-target]');
+            const close = event.target.closest('[data-modal-toggle]');
+            console.log(close);
+            if (target) {
+                const modalId = target.getAttribute('data-modal-target');
+                const modal = document.getElementById(modalId);
+                if (modal) {
+                    const modalInstance = new Modal(modal);
+                     modalInstance.toggle();
+                    
+                    
+                }
+            } else if (close) {
+                const modalId = close.getAttribute('data-modal-toggle');
+                const modal = document.getElementById(modalId);
+                if (modal) {
+                    const modalInstance = new Modal(modal);
+                     modalInstance.hide();
+                    
+                    
+                }
+            }
+            
+        });
+
+
+
         tableBody.addEventListener('click', (event) => {
             const target = event.target.closest('[data-modal-toggle]');
             if (target) {
@@ -325,6 +354,12 @@ document.addEventListener("DOMContentLoaded", () => {
             console.log(id);
             await showEditModal(id);
         }
+    });
+
+    document.getElementById('myForm').addEventListener('submit', function(event) {
+        const button = document.getElementById('save-button');
+        button.disabled = true;
+        button.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...';
     });
 
     async function showFile(event) {
