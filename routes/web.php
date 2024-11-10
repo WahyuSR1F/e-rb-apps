@@ -105,4 +105,5 @@ Route::middleware(['AuthAccess'])->group(function () {
         Route::post('cluster-update','update')->name('cluster-update');
         Route::post('cluster-delete','delete')->name('cluster-delete');
     });
+    
 });

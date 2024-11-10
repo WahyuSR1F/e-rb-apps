@@ -1,0 +1,13 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+        "title": "Laravel",
+        "version": "0.0.1",
+        "description": "Dokumentasi Api Reformasi Birokrasi"
+    },
+    "servers": [
+        {
+            "url": "http:\/\/http:\/\/127.0.0.1:8000\/\/api"
+        }
+    ]
+}

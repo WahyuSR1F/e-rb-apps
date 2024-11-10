@@ -1,0 +1,205 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "APIs For Thrift Store",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/anggaran": {
+            "get": {
+                "tags": [
+                    "Anggaran"
+                ],
+                "summary": "Get a list of target anggaran",
+                "operationId": "98c0f418f2121a21d93ab4642d322d02",
+                "parameters": [
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "perPage",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 10
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/TargetAnggaran"
+                                            }
+                                        },
+                                        "current_page": {
+                                            "type": "integer"
+                                        },
+                                        "last_page": {
+                                            "type": "integer"
+                                        },
+                                        "per_page": {
+                                            "type": "integer"
+                                        },
+                                        "total": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request"
+                    }
+                }
+            }
+        },
+        "/anggaran/{id}": {
+            "get": {
+                "tags": [
+                    "Anggaran"
+                ],
+                "summary": "Get target anggaran by ID",
+                "operationId": "7b27b0ab01c135aefe87c4e64229766f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "Target anggaran not found"
+                    }
+                }
+            }
+        },
+        "/realisasi-anggaran": {
+            "get": {
+                "tags": [
+                    "Realisasi Anggaran"
+                ],
+                "summary": "Get a list of realisasi anggaran",
+                "operationId": "ed0b16cd286040181b9c37f22cd7a0d4",
+                "parameters": [
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "perPage",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 10
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid request"
+                    }
+                }
+            }
+        },
+        "/realisasi-anggaran/{id}": {
+            "get": {
+                "tags": [
+                    "Realisasi Anggaran"
+                ],
+                "summary": "Get realisasi anggaran by ID",
+                "operationId": "f139f319dbfdceb942f7da4834873940",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "Realisasi anggaran not found"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "TargetAnggaran": {
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "TWI": {
+                        "type": "integer"
+                    },
+                    "TWII": {
+                        "type": "integer"
+                    },
+                    "TWIII": {
+                        "type": "integer"
+                    },
+                    "TWIV": {
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "name": "bearerAuth",
+                "in": "header",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Anggaran",
+            "description": "Anggaran"
+        },
+        {
+            "name": "Realisasi Anggaran",
+            "description": "Realisasi Anggaran"
+        }
+    ]
+}

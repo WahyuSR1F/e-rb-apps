@@ -19,7 +19,7 @@ namespace Google\Service\Walletobjects;
 
 class OfferObject extends \Google\Collection
 {
-  protected $collection_key = 'textModulesData';
+  protected $collection_key = 'valueAddedModuleData';
   protected $appLinkDataType = AppLinkData::class;
   protected $appLinkDataDataType = '';
   protected $barcodeType = Barcode::class;
@@ -68,6 +68,10 @@ class OfferObject extends \Google\Collection
   protected $locationsDataType = 'array';
   protected $messagesType = Message::class;
   protected $messagesDataType = 'array';
+  /**
+   * @var string
+   */
+  public $notifyPreference;
   protected $passConstraintsType = PassConstraints::class;
   protected $passConstraintsDataType = '';
   protected $rotatingBarcodeType = RotatingBarcode::class;
@@ -86,6 +90,8 @@ class OfferObject extends \Google\Collection
   protected $textModulesDataDataType = 'array';
   protected $validTimeIntervalType = TimeInterval::class;
   protected $validTimeIntervalDataType = '';
+  protected $valueAddedModuleDataType = ValueAddedModuleData::class;
+  protected $valueAddedModuleDataDataType = 'array';
   /**
    * @var string
    */
@@ -330,6 +336,20 @@ class OfferObject extends \Google\Collection
     return $this->messages;
   }
   /**
+   * @param string
+   */
+  public function setNotifyPreference($notifyPreference)
+  {
+    $this->notifyPreference = $notifyPreference;
+  }
+  /**
+   * @return string
+   */
+  public function getNotifyPreference()
+  {
+    return $this->notifyPreference;
+  }
+  /**
    * @param PassConstraints
    */
   public function setPassConstraints(PassConstraints $passConstraints)
@@ -426,6 +446,20 @@ class OfferObject extends \Google\Collection
   public function getValidTimeInterval()
   {
     return $this->validTimeInterval;
+  }
+  /**
+   * @param ValueAddedModuleData[]
+   */
+  public function setValueAddedModuleData($valueAddedModuleData)
+  {
+    $this->valueAddedModuleData = $valueAddedModuleData;
+  }
+  /**
+   * @return ValueAddedModuleData[]
+   */
+  public function getValueAddedModuleData()
+  {
+    return $this->valueAddedModuleData;
   }
   /**
    * @param string

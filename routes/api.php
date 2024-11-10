@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\Otorization\OtorizartionController;
 
 
 
+
 // Route::middleware(['AuthAccess'])->group(function () {
 
 Route::middleware('AuthApi')->group(function () {

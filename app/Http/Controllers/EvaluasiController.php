@@ -18,15 +18,14 @@ class EvaluasiController extends Controller
 {
     // fungsi get all data untuk di evaluasi
     public function getEvaluasi($user_id){
-
         try {
             $startTime =  microtime(true);
             // query get data
             // $query = RencanaAksi::query();
-            $data = Permasalahan::
-            with(['renaksi.targetAnggaran','renaksi.targetPenyelesaian','renaksi.realisasiAnggaran','renaksi.realisasiPenyelesaian','renaksi.reject'])
+            $data = Permasalahan::with(['renaksi.targetAnggaran','renaksi.targetPenyelesaian','renaksi.realisasiAnggaran','renaksi.realisasiPenyelesaian','renaksi.reject'])
             ->where('user_id', $user_id)
             ->get();
+
             // check if data rencana aksi not found
             if ($data == null) {
                 return response()->json([
@@ -139,7 +138,7 @@ class EvaluasiController extends Controller
                         'subjek' => $request->target_penyelesaian['type'],
                         'jumlah' => $maxTotal,
                     ]);
-                }else if ($$dataTargetPenyelesaian->type == 'kumulatif') {
+                }else if ($dataTargetPenyelesaian->type == 'kumulatif') {
                     $dataTargetPenyelesaian->update([
                         'twI' => $request->target_penyelesaian['twI'],
                         'twII' => $request->target_penyelesaian['twII'],
